@@ -1,23 +1,12 @@
 /**
- * AdminLTE Demo Menu
+ * Iframe Menu
  * ------------------
- * You should not use this file in production.
- * This file is for demo purposes only.
  */
 
 /* eslint-disable camelcase */
 
 (function ($) {
   'use strict'
-
-  setTimeout(function () {
-    if (window.___browserSync___ === undefined && Number(localStorage.getItem('AdminLTE:Demo:MessageShowed')) < Date.now()) {
-      localStorage.setItem('AdminLTE:Demo:MessageShowed', (Date.now()) + (15 * 60 * 1000))
-      // eslint-disable-next-line no-alert
-      alert('You load AdminLTE\'s "demo.js", \nthis file is only created for testing purposes!')
-    }
-  }, 1000)
-
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1)
   }
@@ -60,7 +49,7 @@
   // Checkboxes
 
   $container.append(
-    '<h5>Customize AdminLTE</h5><hr class="mb-2"/>'
+    '<h5>Customize Site</h5><hr class="mb-2"/>'
   )
 
   var $dark_mode_checkbox = $('<input />', {
