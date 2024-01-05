@@ -1,6 +1,10 @@
 package models
 
 import (
+	"fmt"
+
+	"errors"
+
 	"gorm.io/gorm"
 )
 
@@ -12,6 +16,13 @@ type User struct {
 }
 
 func (um *User) GetUser(userName string) (u User) {
-	DB.Where("user_name=?", userName).First(&u)
+	r := DB.Limit(1).Where("user_name=?", userName).Find(&u)
+	if r.Error != nil {
+		if errors.Is(r.Error, gorm.ErrRecordNotFound) {
+			fmt.Println("user does not exist!")
+		}
+		// 数据库链接错误记录日志
+		fmt.Println(r.Error)
+	}
 	return
 }
