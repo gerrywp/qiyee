@@ -5,8 +5,16 @@
 {{template "header" .}}
 </head>
 <body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
-{{block "content" .}}{{end}}
+{{template "content" .}}
+<!--使用block区块指定默认模板
+\{\{ block "name" pipeline \}\} T1 \{\{ end \}\}
+如果有命名为 name 的模板，就引用过来执行，如果没有命名为 name 的模板，就是执行自己定义的内容。
+换句话说，block可以认为是设置一个默认模板。
+ref1:https://laravelacademy.org/post/21925
+ref2:https://zhuanlan.zhihu.com/p/110737088
+-->
 <!-- 引入脚部 -->
 {{template "footer" .}}
+{{template "script" .}}
 </body>
 </html>

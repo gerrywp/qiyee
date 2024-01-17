@@ -10,9 +10,10 @@ import (
 
 type User struct {
 	gorm.Model
-	UserName string `binding:"required"`
-	Password string
-	NickName string
+	UserName   string `binding:"required"`
+	Password   string
+	NickName   string
+	IsRemember bool
 }
 
 func (um *User) GetUser(userName string) (u User) {

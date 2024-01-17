@@ -23,9 +23,14 @@ func doLogin(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	us := service.New()
+	us := service.NewUser()
 	if us.Login(form.UserName, form.Password) {
 		session := sessions.Default(ctx)
+		if !form.IsRemember {
+			session.Options(sessions.Options{
+				MaxAge: 0,
+			})
+		}
 		if cu := common.Current(); cu != nil {
 			data, _ := json.Marshal(&cu)
 			session.Set("user", string(data))
@@ -54,13 +59,49 @@ func home(ctx *gin.Context) {
 }
 
 func banner(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "banner.tmpl", nil)
+	var bs = service.NewBanner()
+	banners := bs.GetBanners()
+	m := make(map[string]string)
+	if len(banners) >= 3 {
+		m["url1"] = banners[0].Url
+		m["url2"] = banners[1].Url
+		m["url3"] = banners[2].Url
+	}
+	ctx.HTML(http.StatusOK, "banner.tmpl", m)
+}
+
+func brand(ctx *gin.Context) {
+	var as = service.NewAbout()
+	r := as.GetAbout()
+	ctx.HTML(http.StatusOK, "brand.tmpl", *r)
+}
+
+func brandUpdate(ctx *gin.Context) {
+	var content = ctx.PostForm("content")
+	var as = service.NewAbout()
+	as.Update(content)
+	ctx.JSON(http.StatusOK, gin.H{"code": true, "msg": "保存成功"})
+}
+
+func bannerUpload(ctx *gin.Context) {
+	var bs = service.NewBanner()
+	result := bs.Upload(ctx)
+	if !result {
+		ctx.JSON(http.StatusOK, gin.H{"code": 0, "msg": "上传失败"})
+	}
+	ctx.JSON(http.StatusOK, gin.H{"code": 1, "msg": "上传成功"})
 }
 
 func SetupRouter(r *gin.Engine) *gin.Engine {
-	r.GET("/pai/login", login)
-	r.POST("/pai/login", doLogin)
-	r.GET("/pai/home", home)
-	r.GET("/pai/banner", banner)
+	pai := r.Group("/pai")
+	{
+		pai.GET("/login", login)
+		pai.POST("/login", doLogin)
+		pai.GET("/home", home)
+		pai.GET("/banner", banner)
+		pai.POST("/banner/upload", bannerUpload)
+		pai.GET("/brand", brand)
+		pai.POST("/brand", brandUpdate)
+	}
 	return r
 }

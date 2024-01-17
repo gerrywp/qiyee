@@ -1,4 +1,58 @@
 {{define "content"}}
 <div class="wrapper">
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="card card-widget">
+                    <div class="card-body">
+                      <img class="img-fluid pad" width="400" height="300" src="{{.url1}}" alt="图片">
+                    </div>
+                    <div class="card-footer">
+                      <label for="upload" data-id="1" class="btn btn-primary">上传</label>
+                      <form id="form" action="/pai/banner/upload" method="post" enctype="multipart/form-data" target="_self">
+                        <input id="id" name="id" style="display: none;" type="number"/>
+                        <input id="upload" name="file" style="display: none;" type="file" accept="image/jpeg,image/gif,image/png"/>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card card-widget">
+                    <div class="card-body">
+                      <img class="img-fluid pad" width="400" height="300" src="{{.url2}}" alt="图片">
+                    </div>
+                    <div class="card-footer">
+                      <label for="upload" data-id="2" class="btn btn-primary">上传</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="card card-widget">
+                    <div class="card-body">
+                      <img class="img-fluid pad" src="{{.url3}}" alt="图片">
+                    </div>
+                    <div class="card-footer">
+                      <label for="upload" data-id="3" class="btn btn-primary">上传</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </section>
+    </div>
 </div>
+{{end}}
+{{define "script"}}
+<script>
+  $( function() {
+    $('label').click(function(){
+      $('#id').val($(this).attr('data-id'))
+    })
+    $('#upload').on('change',function(){
+      $('#form').submit()
+    })
+  })
+</script>
 {{end}}
