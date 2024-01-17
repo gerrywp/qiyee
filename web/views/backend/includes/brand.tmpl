@@ -1,0 +1,54 @@
+{{define "content"}}
+<div class="wrapper">
+    <div class="content-wrapper">
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                      <div class="card card-outline card-info">
+                        <div class="card-header">
+                          <h3 class="card-title">
+                            品牌介绍
+                          </h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div id="summernote"></div>
+                            <textarea id="srcVal" style="display: none;">{{.Content}}</textarea>
+                        </div>
+                        <div class="card-footer">
+                            <button type="button" id="btnOK" class="btn btn-primary">保存</button>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- /.col-->
+                  </div>
+            </div>
+        </section>
+    </div>
+</div>
+{{end}}
+{{define "script"}}
+<script src="/static/plugins/summernote/summernote-bs5.js"></script>
+<script src="/static/plugins/summernote/lang/summernote-zh-CN.js"></script>
+<script>
+    $(function(){
+        $('#summernote').summernote({
+            lang : 'zh-CN',
+            height:300,
+            minHeight:200,
+            maxHeight:400,
+            focus:true,
+    })
+    $('#summernote').summernote('code',$('#srcVal').val())
+    $('#btnOK').click(function(){
+        var markupStr=$('#summernote').summernote('code');
+        $.post('/pai/brand',{"content":markupStr},function(data){
+            if(data.code){
+                toastr.success(data.msg);
+            }
+        })
+    })
+    })
+</script>
+{{end}}
