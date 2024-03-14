@@ -32,10 +32,10 @@ go run main.go
 
 ## 打赏
 
-<a href="https://github.com/gerrywp/qiyee/blob/main/wx_20240314175148.jpg" target="_blank">
+<a target="_blank" rel="noopener noreferrer" href="https://github.com/gerrywp/qiyee/blob/main/wx_20240314175148.jpg">
 <img src="./wx_20240314175148.jpg" alt="微信收款码" title="微信支付" height="160" width="160"/>
 </a>
-<a href="https://github.com/gerrywp/qiyee/blob/main/zfb_20240314175158.jpg" target="_blank">
+<a target="_blank" rel="noopener noreferrer" href="https://github.com/gerrywp/qiyee/blob/main/zfb_20240314175158.jpg" >
 <img src="./zfb_20240314175158.jpg" alt="支付宝收款码" title="支付宝支付" height="160" width="160"/>
 </a>
 
