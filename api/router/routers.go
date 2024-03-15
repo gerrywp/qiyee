@@ -92,6 +92,10 @@ func bannerUpload(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"code": 1, "msg": "上传成功"})
 }
 
+func prod(ctx *gin.Context) {
+	ctx.HTML(http.StatusOK, "prod.tmpl", nil)
+}
+
 func SetupRouter(r *gin.Engine) *gin.Engine {
 	pai := r.Group("/pai")
 	{
@@ -102,6 +106,7 @@ func SetupRouter(r *gin.Engine) *gin.Engine {
 		pai.POST("/banner/upload", bannerUpload)
 		pai.GET("/brand", brand)
 		pai.POST("/brand", brandUpdate)
+		pai.GET("/prod", prod)
 	}
 	return r
 }
