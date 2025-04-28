@@ -87,13 +87,28 @@ func bannerUpload(ctx *gin.Context) {
 	var bs = service.NewBanner()
 	result := bs.Upload(ctx)
 	if !result {
-		ctx.JSON(http.StatusOK, gin.H{"code": 0, "msg": "上传失败"})
+		//ctx.JSON(http.StatusOK, gin.H{"code": 0, "msg": "上传失败"})
+		fmt.Println("failed")
 	}
-	ctx.JSON(http.StatusOK, gin.H{"code": 1, "msg": "上传成功"})
+	//内部重定向
+	ctx.Redirect(http.StatusMovedPermanently, "/pai/banner")
+	//ctx.JSON(http.StatusOK, gin.H{"code": 1, "msg": "上传成功"})
 }
 
 func prod(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "prod.tmpl", nil)
+	var ps = service.NewProder()
+	m := ps.GetProds()
+	ctx.HTML(http.StatusOK, "prod.tmpl", m)
+}
+
+func prodUpdate(ctx *gin.Context) {
+	var pr models.Prod
+	err := ctx.ShouldBind(&pr)
+	if err == nil {
+		var ps = service.NewProder()
+		ps.Update(pr)
+	}
+	ctx.Redirect(http.StatusMovedPermanently, "/pai/prod")
 }
 
 func SetupRouter(r *gin.Engine) *gin.Engine {
@@ -107,6 +122,7 @@ func SetupRouter(r *gin.Engine) *gin.Engine {
 		pai.GET("/brand", brand)
 		pai.POST("/brand", brandUpdate)
 		pai.GET("/prod", prod)
+		pai.POST("/prod/update", prodUpdate)
 	}
 	return r
 }

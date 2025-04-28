@@ -5,12 +5,13 @@
             <!-- Default box -->
             <div class="card card-solid">
                 <div class="card-header text-right">
-                    <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-default">
+                    <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-default" id="btnAdd">
                         <i class="fas fa-plus"></i> 新增
                     </a>
                 </div>
                 <div class="card-body pb-0">
                     <div class="row">
+                        {{range $k,$v:=.}}
                         <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
                             <div class="card bg-light d-flex flex-fill">
                                 <div class="card-header text-muted border-bottom-0">
@@ -19,24 +20,25 @@
                                 <div class="card-body pt-0">
                                     <div class="row">
                                         <div class="col-7">
-                                            <h2 class="lead"><b>产品名称</b></h2>
-                                            <p class="text-muted text-sm"><b>详细介绍: </b>固定格式介绍，固定格式接受阿道夫</p>
+                                            <h2 class="lead"><b id="lblName">{{$v.Name}}</b></h2>
+                                            <p class="text-muted text-sm"><b>详细介绍: </b><span id="lblDesc">{{$v.Desc}}</span></p>
                                         </div>
                                         <div class="col-5 text-center">
-                                            <img src="../../dist/img/user1-128x128.jpg" alt="user-avatar"
+                                            <img src="../../dist/img/user1-128x128.jpg" alt="产品缩略图"
                                                 class="img-circle img-fluid">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-footer">
                                     <div class="text-right">
-                                        <a href="#" class="btn btn-sm btn-primary">
+                                        <a href="#" class="btn btn-sm btn-primary" data-id="{{$v.ID}}" id="btnUpdate">
                                             <i class="fas fa-pen-nib"></i> 修改
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        {{end}}
                     </div>
                 </div>
                 <!-- /.card-body -->
@@ -68,27 +70,25 @@
                         </div>
                         <div class="modal-body">
                             <!-- form start -->
-                            <form>
+                            <form id="form" action="/pai/prod/update" method="post" enctype="application/x-www-form-urlencoded" target="_self">
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="prodName">产品名称</label>
-                                        <input type="text" class="form-control" id="prodName"
+                                        <input type="number" id="prodId" name="ID" style="display: none;">
+                                        <input type="text" class="form-control" id="prodName" name="Name"
                                             placeholder="输入名称">
                                     </div>
                                     <div class="form-group">
-                                        <label for="prodInfo">详细描述</label>
-                                        <textarea rows="5" cols="20" class="form-control" id="prodInfo"
+                                        <label for="prodDesc">详细介绍</label>
+                                        <textarea rows="5" cols="20" class="form-control" id="prodDesc" name="Desc"
                                             placeholder="输入描述"></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label for="prodImg">图片</label>
+                                        <label for="imgUrl">图片</label>
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="prodImg">
+                                                <input type="file" class="custom-file-input" id="imgUrl" name="ImgUrl">
                                                 <label class="custom-file-label" for="prodImg">添加文件</label>
-                                            </div>
-                                            <div class="input-group-append">
-                                                <span class="input-group-text">上传</span>
                                             </div>
                                         </div>
                                     </div>
@@ -98,7 +98,7 @@
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button type="button" class="btn btn-primary">保存</button>
+                            <button id="btnSave" type="button" class="btn btn-primary">保存</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -115,6 +115,26 @@
 <script>
     $(function () {
         bsCustomFileInput.init();
+        $('#btnAdd').click(function(){
+            //reset form val
+            $('#form').trigger("reset");
+        })
+        $('#btnSave').click(function(){
+            $('#form').submit();
+        })
+        $('a[id="btnUpdate"]').click(function(){
+            var id=$(this).attr('data-id');
+            $('#prodId').val(id);
+            var $context=$(this).parent().parent().siblings();
+            var name=$('#lblName',$context).text();
+            $('#prodName').val(name);
+            var desc=$('#lblDesc',$context).text();
+            $('#prodDesc').val(desc);
+            $('#modal-default').modal('show');
+        })
+        $('#imgUrl').on('change',function(){
+            
+        })
     })
 </script>
 {{end}}
