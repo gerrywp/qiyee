@@ -36,13 +36,33 @@ func CheckLogin() gin.HandlerFunc {
 					"msg":  "请先登录",
 				})
 			} else {
-				// 当前项目会有问题，因为使用了iframe嵌套，跳转会失败
-				ctx.Redirect(http.StatusTemporaryRedirect, "/pai/login")
+				// 更可靠的方法是返回一个HTML页面，其中包含JavaScript来强制在顶层窗口跳转
+				redirectHTML := `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>重定向</title>
+    <script type="text/javascript">
+        // 强制在顶层窗口跳转
+        if (window.top !== window.self) {
+            window.top.location.href = "/pai/login";
+        } else {
+            window.location.href = "/pai/login";
+        }
+    </script>
+</head>
+<body>
+    <p>正在跳转登录页面...</p>
+</body>
+</html>
+`
+				ctx.Header("Content-Type", "text/html; charset=utf-8")
+				ctx.String(http.StatusOK, redirectHTML)
 			}
 			ctx.Abort()
 			return
 		}
-
 		ctx.Next()
 	}
 }
