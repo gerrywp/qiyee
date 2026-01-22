@@ -19,6 +19,16 @@
 技术框架：Gin+Gorm+Sqlite  
 页面展示：AdminLTE
 
+## 前置
+因项目使用了SQlite数据库，需要有GCC开发环境才能启动。
+可以手动下下载wingw也可以是用choco安装：
+```bash
+#自行百度，省事，但是需要翻墙
+choco install wingw -y  
+```
+或者通过sourceforge手动下载
+https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-win32/seh/
+
 ## 使用说明
 1. clone本项目
 2. 本地运行

@@ -9,7 +9,7 @@ import (
 // getRootPath return current workspace dir
 func getRootPath() string {
 	d, _ := os.Getwd()
-	return filepath.Dir(d)
+	return d
 }
 
 // GetAbsPath eval absolute path

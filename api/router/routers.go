@@ -1,14 +1,11 @@
 package router
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 
 	"gerry.wang/qiyee/api/models"
 	"gerry.wang/qiyee/api/service"
-	"gerry.wang/qiyee/common"
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
@@ -24,20 +21,7 @@ func doLogin(ctx *gin.Context) {
 		return
 	}
 	us := service.NewUser()
-	if us.Login(form.UserName, form.Password) {
-		session := sessions.Default(ctx)
-		if !form.IsRemember {
-			session.Options(sessions.Options{
-				MaxAge: 0,
-			})
-		}
-		if cu := common.Current(); cu != nil {
-			data, _ := json.Marshal(&cu)
-			session.Set("user", string(data))
-			if err := session.Save(); err != nil {
-				fmt.Println(err)
-			}
-		}
+	if us.Login(ctx, form.UserName, form.Password, form.IsRemember) {
 		//ctx.Redirect(http.StatusFound, "/pai/home")
 		ctx.JSON(http.StatusOK, gin.H{"code": 1, "msg": "登录成功"})
 	} else {
@@ -47,15 +31,7 @@ func doLogin(ctx *gin.Context) {
 }
 
 func home(ctx *gin.Context) {
-	session := sessions.Default(ctx)
-	if r := session.Get("user"); r == nil {
-		ctx.Redirect(http.StatusTemporaryRedirect, "/pai/login")
-	} else {
-		var cu models.User
-		sr := r.(string)
-		json.Unmarshal([]byte(sr), &cu)
-		ctx.HTML(http.StatusOK, "ihome.tmpl", nil)
-	}
+	ctx.HTML(http.StatusOK, "ihome.tmpl", nil)
 }
 
 func banner(ctx *gin.Context) {

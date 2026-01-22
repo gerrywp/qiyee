@@ -5,24 +5,28 @@ import (
 	"path/filepath"
 
 	"gerry.wang/qiyee/api/router"
+	"gerry.wang/qiyee/middleware"
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
+	"github.com/gin-contrib/sessions/memstore"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
 	r := gin.Default()
-	r.StaticFS("/static", http.Dir("../web/static"))
-	r.HTMLRender = loadTemplates("../web/views/**")
-	//r.LoadHTMLGlob("../web/views/**/*")
+	r.StaticFS("/static", http.Dir("./web/static"))
+	r.HTMLRender = loadTemplates("./web/views/**")
+	//r.LoadHTMLGlob("./web/views/**/*")
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pai",
 		})
 	})
-	store := cookie.NewStore([]byte("paigo$"))
+	//store := cookie.NewStore([]byte("..1234567.pai-secret-go-key$"))
+	store := memstore.NewStore([]byte("..1234567.pai-secret-go-key$"))
 	r.Use(sessions.Sessions("qiyee", store))
+	middleware.IgnorePaths = []string{"/pai/login"}
+	r.Use(middleware.CheckLogin())
 	router.SetupRouter(r)
 	r.Run() // 监听并在 0.0.0.0:8080 上启动服务
 }
