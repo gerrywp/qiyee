@@ -3,6 +3,7 @@ package router
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"gerry.wang/qiyee/api/models"
 	"gerry.wang/qiyee/api/service"
@@ -87,6 +88,29 @@ func prodUpdate(ctx *gin.Context) {
 	ctx.Redirect(http.StatusMovedPermanently, "/pai/prod")
 }
 
+// 首页处理函数
+func index(ctx *gin.Context) {
+	var as = service.NewAbout()
+	var ps = service.NewProder()
+	var bs = service.NewBanner()
+
+	// 获取数据
+	about := as.GetAbout()
+	products := ps.GetProds()
+	banners := bs.GetBanners()
+
+	// 准备模板数据
+	data := gin.H{
+		"Title":    "企业门户网站",
+		"About":    *about,
+		"Products": products,
+		"Banners":  banners,
+		"Year":     time.Now().Year(),
+	}
+
+	ctx.HTML(http.StatusOK, "index.tmpl", data)
+}
+
 func SetupRouter(r *gin.Engine) *gin.Engine {
 	pai := r.Group("/pai")
 	{
@@ -100,5 +124,9 @@ func SetupRouter(r *gin.Engine) *gin.Engine {
 		pai.GET("/prod", prod)
 		pai.POST("/prod/update", prodUpdate)
 	}
+
+	// 配置首页路由
+	r.GET("/", index)
+
 	return r
 }

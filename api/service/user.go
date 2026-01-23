@@ -36,7 +36,7 @@ func (us *UserService) Login(ctx *gin.Context, userName, password string, rememb
 			})
 		} else {
 			session.Options(sessions.Options{
-				MaxAge:   60 * 1, //默认1分钟
+				MaxAge:   60 * 30, //默认30分钟
 				Path:     "/",
 				HttpOnly: true,
 			})

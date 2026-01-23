@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>企业门户网站</title>
+    <!-- 引入AdminLTE CSS -->
+    <link rel="stylesheet" href="/static/dist/css/adminlte.min.css">
+    <!-- 引入Font Awesome -->
+    <link rel="stylesheet" href="/static/plugins/fontawesome-free/css/all.min.css">
+    <!-- 自定义样式 -->
+    <style>
+        .navbar {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .navbar-brand {
+            color: #007bff !important;
+            font-weight: bold;
+        }
+        .hero-section {
+            padding: 80px 0;
+            background-color: #f8f9fa;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            color: #343a40;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+        .footer {
+            background-color: #343a40;
+            color: #ffffff;
+            padding: 50px 0;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container">
+            <a class="navbar-brand" href="/">企业名称</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/">首页 <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">关于我们</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/products">产品中心</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/news">新闻动态</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/contact">联系我们</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 页面内容 -->
+    {{template "content" .}}
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>企业名称</h5>
+                    <p>致力于提供优质的产品和服务</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>快速链接</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/about" class="text-white">关于我们</a></li>
+                        <li><a href="/products" class="text-white">产品中心</a></li>
+                        <li><a href="/news" class="text-white">新闻动态</a></li>
+                        <li><a href="/contact" class="text-white">联系我们</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>联系我们</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt"></i> 公司地址</li>
+                        <li><i class="fas fa-phone"></i> 联系电话</li>
+                        <li><i class="fas fa-envelope"></i> 邮箱地址</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="bg-white">
+            <div class="text-center">
+                <p>&copy; {{.Year}} 企业名称 版权所有</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 引入AdminLTE JS -->
+    <script src="/static/plugins/jquery/jquery.min.js"></script>
+    <script src="/static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/dist/js/adminlte.min.js"></script>
+</body>
+</html>
