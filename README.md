@@ -14,33 +14,41 @@
 </a>
 
 ## 介绍
+
 互联网上的开源企业建站都过于复杂了，基本都是使用的Mysql等需要独立安装的数据库。企业门户网站本身就只用做信息展示用，用sqlite完全可以支持。体积最小的企业门户网站，简单；易用；单文件部署。
 
 技术框架：Gin+Gorm+Sqlite  
 页面展示：AdminLTE
 
 ## 前置
+
 ~~因项目使用了SQlite数据库，需要有GCC开发环境才能启动。
 可以手动下下载wingw也可以是用choco安装：~~
+
 ```bash
 #自行百度，省事，但是需要翻墙
-choco install wingw -y  
+choco install wingw -y
 ```
+
 ~~或者通过sourceforge手动下载
 https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/8.1.0/threads-win32/seh/~~
 
 **移除前置条件，已替换原CGO实现的sqlite驱动，为纯GO实现的sqlite驱动。**
 
 ## 使用说明
+
 1. clone本项目
 2. 本地运行
+
 ```cmd
-cd qiyee\cmd
-go run main.go
+cd qiyee
+go run cmd\main.go
 ```
+
 3. 打开项目根目录下的pai.db3的sqlite数据库文件,在users数据库表新增你的用户名密码
-4. 浏览器访问<http://localhost:8080/pai/login>  
-默认用户名密码为：pai/7654321
+4. 管理后端地址：<http://localhost:8080/pai/login>
+   默认用户名密码为：pai/7654321
+5. 企业主页：<http://localhost:8080>
 
 ## 打赏
 

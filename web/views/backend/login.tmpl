@@ -1,100 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>QiYee | Log in</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QiYee | Log in</title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="/static/plugins/fontawesome-free/css/all.min.css">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="/static/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- Toastr -->
-  <link rel="stylesheet" href="/static/plugins/toastr/toastr.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="/static/dist/css/adminlte.min.css">
-</head>
-<body class="hold-transition login-page">
-<div class="login-box">
-  <!-- /.login-logo -->
-  <div class="card card-outline card-primary">
-    <div class="card-header text-center">
-      <a href="javascript:void(0)" class="h1"><b>Qi</b>Yee</a>
-    </div>
-    <div class="card-body">
-      <p class="login-box-msg">登录开启旅行</p>
+    <!-- Google Font: Source Sans Pro -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="/static/plugins/fontawesome-free/css/all.min.css"
+    />
+    <!-- icheck bootstrap -->
+    <link
+      rel="stylesheet"
+      href="/static/plugins/icheck-bootstrap/icheck-bootstrap.min.css"
+    />
+    <!-- Toastr -->
+    <link rel="stylesheet" href="/static/plugins/toastr/toastr.min.css" />
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/static/dist/css/adminlte.min.css" />
+  </head>
+  <body class="hold-transition login-page">
+    <div class="login-box">
+      <!-- /.login-logo -->
+      <div class="card card-outline card-primary">
+        <div class="card-header text-center">
+          <a href="javascript:void(0)" class="h1"><b>Qi</b>Yee</a>
+        </div>
+        <div class="card-body">
+          <p class="login-box-msg">登录开启旅行</p>
 
-      <form action="/pai/login" method="post" target="ifmLogin">
-        <div class="input-group mb-3">
-          <input name="UserName" type="text" class="form-control" placeholder="UserName">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-user"></span>
+          <form action="/pai/login" method="post" target="ifmLogin">
+            <div class="input-group mb-3">
+              <input
+                name="UserName"
+                type="text"
+                class="form-control"
+                placeholder="UserName"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-user"></span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="input-group mb-3">
-          <input name="Password" type="password" class="form-control" placeholder="Password">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
+            <div class="input-group mb-3">
+              <input
+                name="Password"
+                type="password"
+                class="form-control"
+                placeholder="Password"
+              />
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember" name="IsRemember" value="true">
-              <label for="remember">
-                记住我
-              </label>
+            <div class="row">
+              <div class="col-8">
+                <div class="icheck-primary">
+                  <input
+                    type="checkbox"
+                    id="remember"
+                    name="IsRemember"
+                    value="true"
+                  />
+                  <label for="remember"> 记住我 </label>
+                </div>
+              </div>
+              <!-- /.col -->
+              <div class="col-4">
+                <button type="submit" class="btn btn-primary btn-block">
+                  登录
+                </button>
+              </div>
+              <!-- /.col -->
             </div>
-          </div>
-          <!-- /.col -->
-          <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">登录</button>
-          </div>
-          <!-- /.col -->
-        </div>
-      </form>
-      <iframe id="ifmLogin" name="ifmLogin" style="display: none;"></iframe>
-      <div class="social-auth-links text-center mt-2 mb-3">
+          </form>
+          <iframe id="ifmLogin" name="ifmLogin" style="display: none"></iframe>
+          <!-- <div class="social-auth-links text-center mt-2 mb-3">
         <a href="#" class="btn btn-block btn-primary">
           <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
         </a>
         <a href="#" class="btn btn-block btn-danger">
           <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
         </a>
+      </div> -->
+          <!-- /.social-auth-links -->
+        </div>
+        <!-- /.card-body -->
       </div>
-      <!-- /.social-auth-links -->
+      <!-- /.card -->
     </div>
-    <!-- /.card-body -->
-  </div>
-  <!-- /.card -->
-</div>
-<!-- /.login-box -->
+    <!-- /.login-box -->
 
-<!-- jQuery -->
-<script src="/static/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap 4 -->
-<script src="/static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Toastr -->
-<script src="/static/plugins/toastr/toastr.min.js"></script>
-<!-- AdminLTE App -->
-<script src="/static/dist/js/adminlte.min.js"></script>
-<script type="application/javascript">
-  var $ifmLogin=$('#ifmLogin');
-  $ifmLogin.on("load",function(){
-    var result=JSON.parse($ifmLogin.contents().text());
-    if(result.code===1){
-      window.location.href="/pai/home";
-    }
-    else{
-      toastr.warning(result.msg);
-    }
-  })
-</script>
-</body>
+    <!-- jQuery -->
+    <script src="/static/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="/static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Toastr -->
+    <script src="/static/plugins/toastr/toastr.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/static/dist/js/adminlte.min.js"></script>
+    <script type="application/javascript">
+      var $ifmLogin = $("#ifmLogin");
+      $ifmLogin.on("load", function () {
+        var result = JSON.parse($ifmLogin.contents().text());
+        if (result.code === 1) {
+          window.location.href = "/pai/home";
+        } else {
+          toastr.warning(result.msg);
+        }
+      });
+    </script>
+  </body>
 </html>
