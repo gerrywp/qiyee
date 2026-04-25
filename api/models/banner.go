@@ -8,7 +8,8 @@ import (
 
 type Banner struct {
 	gorm.Model
-	Url string
+	Url      string // 原始图片URL
+	ThumbUrl string // 缩略图URL
 }
 
 func (b *Banner) Insert() uint {

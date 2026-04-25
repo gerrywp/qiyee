@@ -15,4 +15,12 @@ func init() {
 		panic("failed to connect database")
 	}
 	DB = db
+	
+	// 自动迁移所有模型
+	DB.AutoMigrate(
+		&Banner{},
+		&User{},
+		&About{},
+		&Prod{},
+	)
 }

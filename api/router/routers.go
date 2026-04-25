@@ -2,7 +2,6 @@ package router
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -55,11 +54,16 @@ func logout(ctx *gin.Context) {
 func banner(ctx *gin.Context) {
 	var bs = service.NewBanner()
 	banners := bs.GetBanners()
-	m := make(map[string]string)
+	m := make(map[string]interface{})
+	m["banners"] = banners
+	if len(banners) >= 1 {
+		m["banner1"] = banners[0]
+	}
+	if len(banners) >= 2 {
+		m["banner2"] = banners[1]
+	}
 	if len(banners) >= 3 {
-		m["url1"] = banners[0].Url
-		m["url2"] = banners[1].Url
-		m["url3"] = banners[2].Url
+		m["banner3"] = banners[2]
 	}
 	ctx.HTML(http.StatusOK, "banner.tmpl", m)
 }
@@ -81,12 +85,24 @@ func bannerUpload(ctx *gin.Context) {
 	var bs = service.NewBanner()
 	result := bs.Upload(ctx)
 	if !result {
-		//ctx.JSON(http.StatusOK, gin.H{"code": 0, "msg": "上传失败"})
-		fmt.Println("failed")
+		ctx.JSON(http.StatusOK, gin.H{"code": 0, "msg": "上传失败"})
+		return
 	}
-	//内部重定向
-	ctx.Redirect(http.StatusMovedPermanently, "/pai/banner")
-	//ctx.JSON(http.StatusOK, gin.H{"code": 1, "msg": "上传成功"})
+	ctx.JSON(http.StatusOK, gin.H{"code": 1, "msg": "上传成功"})
+}
+
+// bannerCrop 处理裁切后的图片上传
+func bannerCrop(ctx *gin.Context) {
+	id := ctx.PostForm("id")
+	imageData := ctx.PostForm("imageData")
+
+	if id == "" || imageData == "" {
+		ctx.JSON(http.StatusOK, gin.H{"code": 0, "msg": "参数错误"})
+		return
+	}
+
+	// TODO: 处理 base64 图片数据并保存
+	ctx.JSON(http.StatusOK, gin.H{"code": 1, "msg": "裁切成功", "thumbUrl": "/static/upload/thumb.jpg"})
 }
 
 func prod(ctx *gin.Context) {
@@ -141,6 +157,7 @@ func SetupRouter(r *gin.Engine) *gin.Engine {
 		pai.GET("/home", home)
 		pai.GET("/banner", banner)
 		pai.POST("/banner/upload", bannerUpload)
+		pai.POST("/banner/crop", bannerCrop)
 		pai.GET("/brand", brand)
 		pai.POST("/brand", brandUpdate)
 		pai.GET("/prod", prod)
