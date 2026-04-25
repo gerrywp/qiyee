@@ -1,12 +1,14 @@
 package router
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
 
 	"gerry.wang/qiyee/api/models"
 	"gerry.wang/qiyee/api/service"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
 
@@ -32,7 +34,22 @@ func doLogin(ctx *gin.Context) {
 }
 
 func home(ctx *gin.Context) {
-	ctx.HTML(http.StatusOK, "ihome.tmpl", nil)
+	session := sessions.Default(ctx)
+	qiyeeData := session.Get("qiyee")
+	if qiyeeData != nil {
+		var user models.User
+		json.Unmarshal([]byte(qiyeeData.(string)), &user)
+		ctx.HTML(http.StatusOK, "ihome.tmpl", gin.H{"UserName": user.UserName})
+	} else {
+		ctx.HTML(http.StatusOK, "ihome.tmpl", nil)
+	}
+}
+
+func logout(ctx *gin.Context) {
+	session := sessions.Default(ctx)
+	session.Delete("qiyee")
+	session.Save()
+	ctx.Redirect(http.StatusFound, "/pai/login")
 }
 
 func banner(ctx *gin.Context) {
@@ -110,6 +127,11 @@ func index(ctx *gin.Context) {
 
 	ctx.HTML(http.StatusOK, "index.tmpl", data)
 }
+func about(ctx *gin.Context) {
+	var as = service.NewAbout()
+	about := as.GetAbout()
+	ctx.HTML(http.StatusOK, "about.tmpl", *about)
+}
 
 func SetupRouter(r *gin.Engine) *gin.Engine {
 	pai := r.Group("/pai")
@@ -123,10 +145,12 @@ func SetupRouter(r *gin.Engine) *gin.Engine {
 		pai.POST("/brand", brandUpdate)
 		pai.GET("/prod", prod)
 		pai.POST("/prod/update", prodUpdate)
+		pai.POST("/logout", logout)
 	}
 
 	// 配置首页路由
 	r.GET("/", index)
+	r.GET("/about", about)
 
 	return r
 }

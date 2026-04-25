@@ -1,0 +1,47 @@
+{{define "content"}}
+<!-- 关于我们页面内容 -->
+<div class="container">
+    <!-- 公司介绍 -->
+    <section class="py-5">
+        <div class="container">
+            <div class="about-content">
+                <h2 class="section-title">公司简介</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="/static/upload/1705236790.jpg" alt="公司介绍" class="img-fluid rounded">
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mt-3">{{.Content | safe}}</p>
+                    </div>
+                </div>
+                <!-- 团队介绍 -->
+                <div class="team-section">
+                    <h3>团队介绍</h3>
+                    <div class="row">
+                        <div class="col-md-3 team-member">
+                            <img src="/static/dist/img/user1-128x128.jpg" alt="团队成员">
+                            <h4>张三</h4>
+                            <p>CEO</p>
+                        </div>
+                        <div class="col-md-3 team-member">
+                            <img src="/static/dist/img/user2-160x160.jpg" alt="团队成员">
+                            <h4>李四</h4>
+                            <p>CTO</p>
+                        </div>
+                        <div class="col-md-3 team-member">
+                            <img src="/static/dist/img/user3-128x128.jpg" alt="团队成员">
+                            <h4>王五</h4>
+                            <p>市场总监</p>
+                        </div>
+                        <div class="col-md-3 team-member">
+                            <img src="/static/dist/img/user4-128x128.jpg" alt="团队成员">
+                            <h4>赵六</h4>
+                            <p>财务总监</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{{end}}
