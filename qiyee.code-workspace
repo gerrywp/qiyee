@@ -1,12 +1,39 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"files.associations": {
-			"*.tmpl": "html"
-		}
-	}
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.associations": {
+      "*.tmpl": "html"
+    },
+    // --- Prettier 负责 HTML / JS / TS / CSS ---
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+
+    // --- Go 使用 gofmt / goimports ---
+    "[go]": {
+      "editor.defaultFormatter": "golang.go"
+    },
+
+    // --- 保存自动格式化 ---
+    "editor.formatOnSave": true,
+
+    // --- Prettier 相关 ---
+    "prettier.useEditorConfig": false,
+    "prettier.configPath": ".prettierrc.json"
+  }
 }

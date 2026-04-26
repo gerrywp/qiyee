@@ -3,6 +3,7 @@ package router
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 	"time"
 
 	"gerry.wang/qiyee/api/models"
@@ -10,6 +11,46 @@ import (
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 )
+
+type PageInfo struct {
+	CurrentPage int
+	PageSize    int
+	TotalCount  int64
+	TotalPages  int
+	HasPrev     bool
+	HasNext     bool
+	PrevPage    int
+	NextPage    int
+	Pages       []int
+}
+
+func buildPageInfo(page, pageSize int, totalCount int64) PageInfo {
+	if page < 1 {
+		page = 1
+	}
+	totalPages := int((totalCount + int64(pageSize) - 1) / int64(pageSize))
+	if totalPages < 1 {
+		totalPages = 1
+	}
+	if page > totalPages {
+		page = totalPages
+	}
+	pages := make([]int, 0, totalPages)
+	for i := 1; i <= totalPages; i++ {
+		pages = append(pages, i)
+	}
+	return PageInfo{
+		CurrentPage: page,
+		PageSize:    pageSize,
+		TotalCount:  totalCount,
+		TotalPages:  totalPages,
+		HasPrev:     page > 1,
+		HasNext:     page < totalPages,
+		PrevPage:    page - 1,
+		NextPage:    page + 1,
+		Pages:       pages,
+	}
+}
 
 func login(ctx *gin.Context) {
 	ctx.HTML(http.StatusOK, "login.tmpl", nil)
@@ -106,19 +147,72 @@ func bannerCrop(ctx *gin.Context) {
 }
 
 func prod(ctx *gin.Context) {
+	page := 1
+	pageParam := ctx.Query("page")
+	if pageParam != "" {
+		if p, err := strconv.Atoi(pageParam); err == nil && p > 0 {
+			page = p
+		}
+	}
+
+	const pageSize = 6
 	var ps = service.NewProder()
-	m := ps.GetProds()
-	ctx.HTML(http.StatusOK, "prod.tmpl", m)
+	prods, total := ps.GetProdsByPage(page, pageSize)
+	ctx.HTML(http.StatusOK, "prod.tmpl", gin.H{
+		"Products": prods,
+		"Page":     buildPageInfo(page, pageSize, total),
+	})
 }
 
 func prodUpdate(ctx *gin.Context) {
-	var pr models.Prod
-	err := ctx.ShouldBind(&pr)
-	if err == nil {
-		var ps = service.NewProder()
-		ps.Update(pr)
+	id, _ := strconv.Atoi(ctx.PostForm("ID"))
+	name := ctx.PostForm("Name")
+	desc := ctx.PostForm("Desc")
+	existingImgUrl := ctx.PostForm("ExistingImgUrl")
+	existingThumbUrl := ctx.PostForm("ExistingThumbx150Url")
+
+	prodEntity := models.Prod{
+		Name:         name,
+		Desc:         desc,
+		ImgUrl:       existingImgUrl,
+		Thumbx150Url: existingThumbUrl,
 	}
-	ctx.Redirect(http.StatusMovedPermanently, "/pai/prod")
+
+	if id > 0 {
+		if existing, err := service.NewProder().FindByID(uint(id)); err == nil {
+			prodEntity = *existing
+			prodEntity.Name = name
+			prodEntity.Desc = desc
+		}
+	}
+
+	if _, err := ctx.FormFile("file"); err == nil {
+		if fi, err := service.NewUploader().UploadWithThumbnailSize(ctx, 150, 150); err == nil {
+			prodEntity.ImgUrl = fi.OriginUrl
+			prodEntity.Thumbx150Url = fi.ThumbUrl
+		}
+	}
+
+	prodEntity.Update()
+	ctx.Redirect(http.StatusSeeOther, "/pai/prod")
+}
+
+func prodDelete(ctx *gin.Context) {
+	id, _ := strconv.Atoi(ctx.PostForm("ID"))
+	page, _ := strconv.Atoi(ctx.PostForm("page"))
+	if id > 0 {
+		_ = service.NewProder().DeleteByID(uint(id))
+	}
+
+	const pageSize = 6
+	var ps = service.NewProder()
+	_, total := ps.GetProdsByPage(page, pageSize)
+	targetPage := buildPageInfo(page, pageSize, total).CurrentPage
+	if targetPage > 1 {
+		ctx.Redirect(http.StatusSeeOther, "/pai/prod?page="+strconv.Itoa(targetPage))
+		return
+	}
+	ctx.Redirect(http.StatusSeeOther, "/pai/prod")
 }
 
 // 首页处理函数
@@ -162,6 +256,7 @@ func SetupRouter(r *gin.Engine) *gin.Engine {
 		pai.POST("/brand", brandUpdate)
 		pai.GET("/prod", prod)
 		pai.POST("/prod/update", prodUpdate)
+		pai.POST("/prod/delete", prodDelete)
 		pai.POST("/logout", logout)
 	}
 

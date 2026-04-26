@@ -1,140 +1,284 @@
 {{define "content"}}
 <div class="wrapper">
-    <div class="content-wrapper">
-        <section class="content">
-            <!-- Default box -->
-            <div class="card card-solid">
-                <div class="card-header text-right">
-                    <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#modal-default" id="btnAdd">
-                        <i class="fas fa-plus"></i> 新增
-                    </a>
-                </div>
-                <div class="card-body pb-0">
-                    <div class="row">
-                        {{range $k,$v:=.}}
-                        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
-                            <div class="card bg-light d-flex flex-fill">
-                                <div class="card-header text-muted border-bottom-0">
-                                    分类
-                                </div>
-                                <div class="card-body pt-0">
-                                    <div class="row">
-                                        <div class="col-7">
-                                            <h2 class="lead"><b id="lblName">{{$v.Name}}</b></h2>
-                                            <p class="text-muted text-sm"><b>详细介绍: </b><span id="lblDesc">{{$v.Desc}}</span></p>
-                                        </div>
-                                        <div class="col-5 text-center">
-                                            <img src="../../dist/img/user1-128x128.jpg" alt="产品缩略图"
-                                                class="img-circle img-fluid">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="text-right">
-                                        <a href="#" class="btn btn-sm btn-primary" data-id="{{$v.ID}}" id="btnUpdate">
-                                            <i class="fas fa-pen-nib"></i> 修改
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        {{end}}
+  <div class="content-wrapper">
+    <section class="content">
+      <!-- Default box -->
+      <div class="card card-solid">
+        <div class="card-header text-right">
+          <a
+            href="#"
+            class="btn btn-sm btn-primary"
+            data-toggle="modal"
+            data-target="#modal-default"
+            id="btnAdd"
+          >
+            <i class="fas fa-plus"></i> 新增
+          </a>
+        </div>
+        <div class="card-body pb-0">
+          <div class="row">
+            {{range $k,$v:=.Products}}
+            <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+              <div class="card bg-light d-flex flex-fill">
+                <div class="card-header text-muted border-bottom-0">产品信息</div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-7">
+                      <h2 class="lead">
+                        <b id="lblName">{{ $v.Name }}</b>
+                      </h2>
+                      <p class="text-muted text-sm">
+                        <b>详细介绍: </b><span id="lblDesc">{{ $v.Desc }}</span>
+                      </p>
                     </div>
+                    <div class="col-5 text-center">
+                      <img
+                        src="{{if $v.Thumbx150Url}}{{
+                          $v.Thumbx150Url
+                        }}{{else}}/static/dist/img/pd150x150.png{{ end }}"
+                        alt="产品缩略图"
+                        class="img-fluid rounded"
+                        style="width: 150px; height: 150px; object-fit: cover"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="text-right">
+                    <a
+                      href="#"
+                      class="btn btn-sm btn-primary btnUpdate"
+                      data-id="{{ $v.ID }}"
+                      data-name="{{ $v.Name }}"
+                      data-desc="{{ $v.Desc }}"
+                      data-imgurl="{{ $v.ImgUrl }}"
+                      data-thumburl="{{ $v.Thumbx150Url }}"
+                    >
+                      <i class="fas fa-pen-nib"></i> 修改
+                    </a>
+                    <a href="#" class="btn btn-sm btn-danger btnDelete" data-id="{{ $v.ID }}">
+                      <i class="fas fa-trash"></i> 删除
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{ end }}
+          </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          <div class="d-flex justify-content-between align-items-center">
+            <nav aria-label="Contacts Page Navigation">
+              <ul class="pagination m-0">
+                {{if .Page.HasPrev}}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{.Page.PrevPage}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                {{
+                  end
+                }}
+
+                {{
+                  range.Page.Pages
+                }}
+                <li class="page-item {{if eq . $.Page.CurrentPage}}active{{ end }}">
+                  <a class="page-link" href="?page={{.}}">{{.}}</a>
+                </li>
+                {{
+                  end
+                }}
+
+                {{if .Page.HasNext}}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{.Page.NextPage}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+                {{
+                  end
+                }}
+              </ul>
+            </nav>
+            <div class="text-muted">
+              第 {{.Page.CurrentPage}} 页，共 {{.Page.TotalPages}} 页，总计
+              {{.Page.TotalCount}} 条记录
+            </div>
+          </div>
+        </div>
+        <!-- /.card-footer -->
+      </div>
+      <!-- /.card -->
+      <div class="modal fade" id="modal-default">
+        <div class="modal-dialog modal-dialog-scrollable">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">产品信息</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <!-- form start -->
+              <form
+                id="form"
+                action="/pai/prod/update"
+                method="post"
+                enctype="multipart/form-data"
+                target="_self"
+              >
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="prodName">产品名称</label>
+                    <input type="hidden" id="prodId" name="ID" />
+                    <input type="hidden" id="existingImgUrl" name="ExistingImgUrl" />
+                    <input type="hidden" id="existingThumbUrl" name="ExistingThumbx150Url" />
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="prodName"
+                      name="Name"
+                      placeholder="输入名称"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="prodDesc">详细介绍</label>
+                    <textarea
+                      rows="5"
+                      cols="20"
+                      class="form-control"
+                      id="prodDesc"
+                      name="Desc"
+                      placeholder="输入描述"
+                      required
+                    ></textarea>
+                  </div>
+                  <div class="form-group">
+                    <label for="imgUrl">图片</label>
+                    <div class="input-group">
+                      <div class="custom-file">
+                        <input
+                          type="file"
+                          class="custom-file-input"
+                          id="imgUrl"
+                          name="file"
+                          accept="image/*"
+                        />
+                        <label class="custom-file-label" for="imgUrl">选择图片文件</label>
+                      </div>
+                    </div>
+                    <small class="form-text text-muted">支持 JPG、PNG、GIF 格式，最大 5MB</small>
+                  </div>
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer">
-                    <nav aria-label="Contacts Page Navigation">
-                        <ul class="pagination justify-content-center m-0">
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">4</a></li>
-                            <li class="page-item"><a class="page-link" href="#">5</a></li>
-                            <li class="page-item"><a class="page-link" href="#">6</a></li>
-                            <li class="page-item"><a class="page-link" href="#">7</a></li>
-                            <li class="page-item"><a class="page-link" href="#">8</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <!-- /.card-footer -->
+              </form>
+              <form id="deleteForm" action="/pai/prod/delete" method="post" style="display: none">
+                <input type="hidden" id="deleteProdId" name="ID" />
+                <input
+                  type="hidden"
+                  id="deleteProdPage"
+                  name="page"
+                  value="{{.Page.CurrentPage}}"
+                />
+              </form>
             </div>
-            <!-- /.card -->
-            <div class="modal fade" id="modal-default">
-                <div class="modal-dialog modal-dialog-scrollable">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">产品信息</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- form start -->
-                            <form id="form" action="/pai/prod/update" method="post" enctype="application/x-www-form-urlencoded" target="_self">
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="prodName">产品名称</label>
-                                        <input type="number" id="prodId" name="ID" style="display: none;">
-                                        <input type="text" class="form-control" id="prodName" name="Name"
-                                            placeholder="输入名称">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="prodDesc">详细介绍</label>
-                                        <textarea rows="5" cols="20" class="form-control" id="prodDesc" name="Desc"
-                                            placeholder="输入描述"></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="imgUrl">图片</label>
-                                        <div class="input-group">
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="imgUrl" name="ImgUrl">
-                                                <label class="custom-file-label" for="prodImg">添加文件</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.card-body -->
-                            </form>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                            <button id="btnSave" type="button" class="btn btn-primary">保存</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+              <button id="btnSave" type="button" class="btn btn-primary">保存</button>
             </div>
-            <!-- /.modal -->
-        </section>
-    </div>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+    </section>
+  </div>
 </div>
-{{end}}
+{{ end }}
 {{define "script"}}
 <script src="/static/plugins/bs-custom-file-input/bs-custom-file-input.js"></script>
 <script>
-    $(function () {
-        bsCustomFileInput.init();
-        $('#btnAdd').click(function(){
-            //reset form val
-            $('#form').trigger("reset");
-        })
-        $('#btnSave').click(function(){
-            $('#form').submit();
-        })
-        $('a[id="btnUpdate"]').click(function(){
-            var id=$(this).attr('data-id');
-            $('#prodId').val(id);
-            var $context=$(this).parent().parent().siblings();
-            var name=$('#lblName',$context).text();
-            $('#prodName').val(name);
-            var desc=$('#lblDesc',$context).text();
-            $('#prodDesc').val(desc);
-            $('#modal-default').modal('show');
-        })
-        $('#imgUrl').on('change',function(){
-            
-        })
+  $(function () {
+    bsCustomFileInput.init()
+
+    // 新增按钮点击事件
+    $('#btnAdd').click(function (e) {
+      e.preventDefault()
+      // 重置表单
+      $('#form')[0].reset()
+      $('#prodId').val('')
+      $('#existingImgUrl').val('')
+      $('#existingThumbUrl').val('')
+      $('#modal-default .modal-title').text('新增产品')
+      $('#modal-default').modal('show')
     })
+
+    // 保存按钮点击事件
+    $('#btnSave').click(function () {
+      // 表单验证
+      var name = $('#prodName').val().trim()
+      var desc = $('#prodDesc').val().trim()
+
+      if (!name) {
+        alert('请输入产品名称')
+        $('#prodName').focus()
+        return
+      }
+
+      if (!desc) {
+        alert('请输入产品详细介绍')
+        $('#prodDesc').focus()
+        return
+      }
+
+      $('#form').submit()
+    })
+
+    // 编辑按钮点击事件
+    $('.btnUpdate').click(function (e) {
+      e.preventDefault()
+      var id = $(this).data('id')
+      var name = $(this).data('name')
+      var desc = $(this).data('desc')
+      var imgUrl = $(this).data('imgurl')
+      var thumbUrl = $(this).data('thumburl')
+
+      // 填充表单数据
+      $('#prodId').val(id)
+      $('#prodName').val(name)
+      $('#prodDesc').val(desc)
+      $('#existingImgUrl').val(imgUrl)
+      $('#existingThumbUrl').val(thumbUrl)
+
+      $('#modal-default .modal-title').text('编辑产品')
+      $('#modal-default').modal('show')
+    })
+
+    // 删除按钮点击事件
+    $('.btnDelete').click(function (e) {
+      e.preventDefault()
+      var id = $(this).data('id')
+      if (!id) {
+        return
+      }
+
+      if (confirm('确认删除该产品吗？')) {
+        $('#deleteProdId').val(id)
+        $('#deleteForm').submit()
+      }
+    })
+
+    // 文件选择事件
+    $('#imgUrl').on('change', function () {
+      var fileName = $(this).val().split('\\').pop()
+      if (fileName) {
+        $(this).next('.custom-file-label').html(fileName)
+      }
+    })
+  })
 </script>
-{{end}}
+{{ end }}

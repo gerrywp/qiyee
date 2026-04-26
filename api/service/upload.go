@@ -108,6 +108,27 @@ func (us *UploadService) UploadWithThumbnail(ctx *gin.Context) (BannerUploadResu
 	}, nil
 }
 
+func (us *UploadService) UploadWithThumbnailSize(ctx *gin.Context, width, height int) (BannerUploadResult, error) {
+	fileInfo, err := us.Upload(ctx)
+	if err != nil {
+		return BannerUploadResult{}, err
+	}
+
+	originalPath := filepath.Join(configs.GetAbsPath("/web/static/upload"), filepath.Base(fileInfo.FileUrl))
+	thumbUrl, err := us.GenerateThumbnail(originalPath, width, height)
+	if err != nil {
+		return BannerUploadResult{
+			OriginUrl: fileInfo.FileUrl,
+			ThumbUrl:  fileInfo.FileUrl,
+		}, nil
+	}
+
+	return BannerUploadResult{
+		OriginUrl: fileInfo.FileUrl,
+		ThumbUrl:  thumbUrl,
+	}, nil
+}
+
 // GenerateThumbnail 生成缩略图
 // originalPath: 原始图片的完整路径
 // maxWidth, maxHeight: 缩略图的最大宽高（等比例缩放）
