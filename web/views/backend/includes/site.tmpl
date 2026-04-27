@@ -1,0 +1,251 @@
+{{define "content"}}
+<div class="wrapper">
+  <div class="content-wrapper">
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card card-outline card-info">
+              <div class="card-header">
+                <h3 class="card-title">站点信息</h3>
+              </div>
+              <div class="card-body">
+                <form id="siteForm">
+                  <!-- 第一行：站点标题 和 联系电话 -->
+                  <div class="form-row mb-3">
+                    <div class="col-md-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label class="mb-0 mr-3" style="min-width: 80px">站点标题：</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="Title"
+                          value="{{.Title}}"
+                          placeholder="请输入站点标题"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label class="mb-0 mr-3" style="min-width: 87px">联系电话：</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="Tel"
+                          value="{{.Tel}}"
+                          placeholder="请输入联系电话"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 第二行：电子邮箱 和 备案号 -->
+                  <div class="form-row mb-3">
+                    <div class="col-md-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label class="mb-0 mr-3" style="min-width: 80px">电子邮箱：</label>
+                        <input
+                          type="email"
+                          class="form-control"
+                          name="Email"
+                          value="{{.Email}}"
+                          placeholder="请输入电子邮箱"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label class="mb-0 mr-3" style="min-width: 87px">备案号：</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="ICP"
+                          value="{{.ICP}}"
+                          placeholder="请输入备案号"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 第三行：版权信息（占满一行） -->
+                  <div class="form-row mb-3">
+                    <div class="col-md-12">
+                      <div class="form-group d-flex align-items-center">
+                        <label class="mb-0 mr-3" style="min-width: 80px">版权信息：</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="Copyright"
+                          value="{{.Copyright}}"
+                          placeholder="请输入版权信息"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 第四行：友情链接1 和 友情链接1URL -->
+                  <div class="form-row mb-3">
+                    <div class="col-md-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label class="mb-0 mr-3" style="min-width: 80px">友链1：</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="FL1"
+                          value="{{.FL1}}"
+                          placeholder="链接名称"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label class="mb-0 mr-3" style="min-width: 87px">友链1URL：</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="FL1URL"
+                          value="{{.FL1URL}}"
+                          placeholder="链接地址"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 第五行：友情链接2 和 友情链接2URL -->
+                  <div class="form-row mb-3">
+                    <div class="col-md-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label class="mb-0 mr-3" style="min-width: 80px">友链2：</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="FL2"
+                          value="{{.FL2}}"
+                          placeholder="链接名称"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label class="mb-0 mr-3" style="min-width: 87px">友链2URL：</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="FL2URL"
+                          value="{{.FL2URL}}"
+                          placeholder="链接地址"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 第六行：友情链接3 和 友情链接3URL -->
+                  <div class="form-row mb-3">
+                    <div class="col-md-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label class="mb-0 mr-3" style="min-width: 80px">友链3：</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="FL3"
+                          value="{{.FL3}}"
+                          placeholder="链接名称"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label class="mb-0 mr-3" style="min-width: 87px">友链3URL：</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="FL3URL"
+                          value="{{.FL3URL}}"
+                          placeholder="链接地址"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 第七行：友情链接4 和 友情链接4URL -->
+                  <div class="form-row mb-3">
+                    <div class="col-md-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label class="mb-0 mr-3" style="min-width: 80px">友链4：</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="FL4"
+                          value="{{.FL4}}"
+                          placeholder="链接名称"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label class="mb-0 mr-3" style="min-width: 87px">友链4URL：</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="FL4URL"
+                          value="{{.FL4URL}}"
+                          placeholder="链接地址"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <!-- 第八行：友情链接5 和 友情链接5URL -->
+                  <div class="form-row mb-3">
+                    <div class="col-md-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label class="mb-0 mr-3" style="min-width: 80px">友链5：</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="FL5"
+                          value="{{.FL5}}"
+                          placeholder="链接名称"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label class="mb-0 mr-3" style="min-width: 87px">友链5URL：</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="FL5URL"
+                          value="{{.FL5URL}}"
+                          placeholder="链接地址"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="card-footer">
+                <button type="button" id="btnSaveSite" class="btn btn-primary">保存</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+{{ end }}
+
+{{define "script"}}
+<script>
+  $(function () {
+    $('#btnSaveSite').click(function () {
+      $.post(
+        '/pai/site',
+        $('#siteForm').serialize(),
+        function (data) {
+          if (data.code) {
+            toastr.success(data.msg)
+          } else {
+            toastr.error(data.msg || '保存失败')
+          }
+        },
+        'json'
+      )
+    })
+  })
+</script>
+{{ end }}

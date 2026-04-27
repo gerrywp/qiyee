@@ -10,6 +10,7 @@ import (
 	"gerry.wang/qiyee/api/service"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 type PageInfo struct {
@@ -122,6 +123,36 @@ func brandUpdate(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, gin.H{"code": true, "msg": "保存成功"})
 }
 
+func site(ctx *gin.Context) {
+	var ss = service.NewSite()
+	siteInfo := ss.GetSite()
+	ctx.HTML(http.StatusOK, "site.tmpl", siteInfo)
+}
+
+func siteUpdate(ctx *gin.Context) {
+	siteInfo := models.Site{
+		Model:     gorm.Model{ID: 1},
+		Title:     ctx.PostForm("Title"),
+		Tel:       ctx.PostForm("Tel"),
+		Email:     ctx.PostForm("Email"),
+		ICP:       ctx.PostForm("ICP"),
+		Copyright: ctx.PostForm("Copyright"),
+		FL1:       ctx.PostForm("FL1"),
+		FL1URL:    ctx.PostForm("FL1URL"),
+		FL2:       ctx.PostForm("FL2"),
+		FL2URL:    ctx.PostForm("FL2URL"),
+		FL3:       ctx.PostForm("FL3"),
+		FL3URL:    ctx.PostForm("FL3URL"),
+		FL4:       ctx.PostForm("FL4"),
+		FL4URL:    ctx.PostForm("FL4URL"),
+		FL5:       ctx.PostForm("FL5"),
+		FL5URL:    ctx.PostForm("FL5URL"),
+	}
+	var ss = service.NewSite()
+	ss.Update(siteInfo)
+	ctx.JSON(http.StatusOK, gin.H{"code": true, "msg": "保存成功"})
+}
+
 func bannerUpload(ctx *gin.Context) {
 	var bs = service.NewBanner()
 	result := bs.Upload(ctx)
@@ -215,6 +246,54 @@ func prodDelete(ctx *gin.Context) {
 	ctx.Redirect(http.StatusSeeOther, "/pai/prod")
 }
 
+func news(ctx *gin.Context) {
+	page := 1
+	pageParam := ctx.Query("page")
+	if pageParam != "" {
+		if p, err := strconv.Atoi(pageParam); err == nil && p > 0 {
+			page = p
+		}
+	}
+
+	const pageSize = 10
+	var ns = service.NewNews()
+	news, total := ns.GetNewsByPage(page, pageSize)
+	ctx.HTML(http.StatusOK, "news.tmpl", gin.H{
+		"News": news,
+		"Page": buildPageInfo(page, pageSize, total),
+	})
+}
+
+func newsUpdate(ctx *gin.Context) {
+	id, _ := strconv.Atoi(ctx.PostForm("ID"))
+	title := ctx.PostForm("Title")
+	content := ctx.PostForm("Content")
+
+	newsEntity := models.News{
+		Title:   title,
+		Content: content,
+	}
+
+	if id > 0 {
+		if existing, err := service.NewNews().FindByID(uint(id)); err == nil {
+			newsEntity = *existing
+			newsEntity.Title = title
+			newsEntity.Content = content
+		}
+	}
+
+	newsEntity.Update()
+	ctx.JSON(http.StatusOK, gin.H{"code": true, "msg": "保存成功"})
+}
+
+func newsDelete(ctx *gin.Context) {
+	id, _ := strconv.Atoi(ctx.PostForm("ID"))
+	if id > 0 {
+		_ = service.NewNews().DeleteByID(uint(id))
+	}
+	ctx.JSON(http.StatusOK, gin.H{"code": true, "msg": "删除成功"})
+}
+
 // 首页处理函数
 func index(ctx *gin.Context) {
 	var as = service.NewAbout()
@@ -254,9 +333,14 @@ func SetupRouter(r *gin.Engine) *gin.Engine {
 		pai.POST("/banner/crop", bannerCrop)
 		pai.GET("/brand", brand)
 		pai.POST("/brand", brandUpdate)
+		pai.GET("/site", site)
+		pai.POST("/site", siteUpdate)
 		pai.GET("/prod", prod)
 		pai.POST("/prod/update", prodUpdate)
 		pai.POST("/prod/delete", prodDelete)
+		pai.GET("/news", news)
+		pai.POST("/news/update", newsUpdate)
+		pai.POST("/news/delete", newsDelete)
 		pai.POST("/logout", logout)
 	}
 

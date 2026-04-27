@@ -1,0 +1,217 @@
+{{define "content"}}
+<div class="wrapper">
+  <div class="content-wrapper">
+    <section class="content">
+      <!-- Default box -->
+      <div class="card card-solid">
+        <div class="card-header text-right">
+          <a
+            href="#"
+            class="btn btn-sm btn-primary"
+            data-toggle="modal"
+            data-target="#modal-default"
+            id="btnAdd"
+          >
+            <i class="fas fa-plus"></i> 新增
+          </a>
+        </div>
+        <div class="card-body pb-0">
+          <div class="row">
+            {{range $k,$v:=.News}}
+            <div class="col-12 d-flex align-items-stretch flex-column">
+              <div class="card bg-light d-flex flex-fill">
+                <div class="card-header text-muted border-bottom-0">新闻资讯</div>
+                <div class="card-body pt-0">
+                  <div class="row">
+                    <div class="col-12">
+                      <h2 class="lead">
+                        <b id="lblTitle">{{ $v.Title }}</b>
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <div class="text-right">
+                    <a
+                      href="#"
+                      class="btn btn-sm btn-primary btnUpdate"
+                      data-id="{{ $v.ID }}"
+                      data-title="{{ $v.Title }}"
+                      data-content="{{ $v.Content }}"
+                    >
+                      <i class="fas fa-pen-nib"></i> 修改
+                    </a>
+                    <a href="#" class="btn btn-sm btn-danger btnDelete" data-id="{{ $v.ID }}">
+                      <i class="fas fa-trash"></i> 删除
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{ end }}
+          </div>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer">
+          <div class="d-flex justify-content-between align-items-center">
+            <nav aria-label="News Page Navigation">
+              <ul class="pagination m-0">
+                {{if .Page.HasPrev}}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{.Page.PrevPage}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                {{
+                  end
+                }}
+
+                {{
+                  range.Page.Pages
+                }}
+                <li class="page-item {{if eq . $.Page.CurrentPage}}active{{ end }}">
+                  <a class="page-link" href="?page={{.}}">{{.}}</a>
+                </li>
+                {{
+                  end
+                }}
+
+                {{if .Page.HasNext}}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{.Page.NextPage}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+                {{
+                  end
+                }}
+              </ul>
+            </nav>
+            <div class="text-muted">
+              第 {{.Page.CurrentPage}} 页，共 {{.Page.TotalPages}} 页，总计
+              {{.Page.TotalCount}} 条记录
+            </div>
+          </div>
+        </div>
+        <!-- /.card-footer -->
+      </div>
+    </section>
+    <!-- /.card -->
+    <div class="modal fade" id="modal-default" style="padding: 0 !important">
+      <div
+        class="modal-dialog modal-fullscreen modal-dialog-scrollable"
+        style="
+          max-width: 100%;
+          width: 100vw;
+          height: 100vh;
+          margin: 0;
+          max-height: 100vh !important;
+        "
+      >
+        <div
+          class="modal-content"
+          style="
+            max-height: 100vh !important;
+            height: 100vh !important;
+            display: flex;
+            flex-direction: column;
+          "
+        >
+          <div class="modal-header" style="padding-top: 5px; padding-bottom: 5px; flex-shrink: 0">
+            <h4 class="modal-title">新闻资讯</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" style="width: 100%; height: 100%">
+            <!-- form start -->
+            <form id="form" action="/pai/news/update" method="post" target="_self">
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="newsTitle">新闻标题</label>
+                  <input type="hidden" id="newsId" name="ID" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="newsTitle"
+                    name="Title"
+                    placeholder="输入新闻标题"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="newsContent">新闻内容</label>
+                  <div id="summernote"></div>
+                  <textarea id="srcVal" name="Content" style="display: none"></textarea>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary">保存</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{ end }}
+{{define "script"}}
+<script src="/static/plugins/summernote/summernote-bs5.js"></script>
+<script src="/static/plugins/summernote/lang/summernote-zh-CN.js"></script>
+<script>
+  $(function () {
+    $('#summernote').summernote({
+      lang: 'zh-CN',
+      height: 300,
+      minHeight: 200,
+      maxHeight: 400,
+      focus: true
+    })
+
+    $('#btnAdd').click(function () {
+      $('#newsId').val('')
+      $('#newsTitle').val('')
+      $('#summernote').summernote('code', '')
+      $('#srcVal').val('')
+    })
+
+    $('.btnUpdate').click(function () {
+      var id = $(this).data('id')
+      var title = $(this).data('title')
+      var content = $(this).data('content')
+      $('#newsId').val(id)
+      $('#newsTitle').val(title)
+      $('#summernote').summernote('code', content)
+      $('#srcVal').val(content)
+      $('#modal-default').modal('show')
+    })
+
+    $('.btnDelete').click(function () {
+      var id = $(this).data('id')
+      if (confirm('确定删除这条新闻吗？')) {
+        $.post('/pai/news/delete', { ID: id }, function (data) {
+          if (data.code) {
+            toastr.success(data.msg)
+            location.reload()
+          }
+        })
+      }
+    })
+
+    $('#form').submit(function (e) {
+      e.preventDefault()
+      var markupStr = $('#summernote').summernote('code')
+      $('#srcVal').val(markupStr)
+      $.post('/pai/news/update', $(this).serialize(), function (data) {
+        if (data.code) {
+          toastr.success(data.msg)
+          $('#modal-default').modal('hide')
+          location.reload()
+        }
+      })
+    })
+  })
+</script>
+{{ end }}
