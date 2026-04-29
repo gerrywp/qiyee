@@ -12,6 +12,7 @@ func NewSite() *SiteService {
 
 func (s *SiteService) Update(site models.Site) {
 	entity := new(models.Site)
+	entity.Url = site.Url
 	entity.ID = site.ID
 	entity.Title = site.Title
 	entity.Tel = site.Tel

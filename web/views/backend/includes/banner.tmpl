@@ -20,12 +20,7 @@
               <div class="card-body p-0">
                 <div
                   class="banner-preview-wrapper"
-                  style="
-                    width: 100%;
-                    height: 225px;
-                    overflow: hidden;
-                    background-color: #f5f5f5;
-                  "
+                  style="width: 100%; height: 225px; overflow: hidden; background-color: #f5f5f5"
                 >
                   <img
                     id="preview1"
@@ -37,18 +32,10 @@
                 </div>
               </div>
               <div class="card-footer">
-                <button
-                  type="button"
-                  class="btn btn-primary btn-sm"
-                  onclick="initUpload(1)"
-                >
+                <button type="button" class="btn btn-primary btn-sm" onclick="initUpload(1)">
                   上传图片
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-info btn-sm"
-                  onclick="showCropper(1)"
-                >
+                <button type="button" class="btn btn-info btn-sm" onclick="showCropper(1)">
                   预览原图
                 </button>
               </div>
@@ -65,12 +52,7 @@
               <div class="card-body p-0">
                 <div
                   class="banner-preview-wrapper"
-                  style="
-                    width: 100%;
-                    height: 225px;
-                    overflow: hidden;
-                    background-color: #f5f5f5;
-                  "
+                  style="width: 100%; height: 225px; overflow: hidden; background-color: #f5f5f5"
                 >
                   <img
                     id="preview2"
@@ -82,18 +64,10 @@
                 </div>
               </div>
               <div class="card-footer">
-                <button
-                  type="button"
-                  class="btn btn-primary btn-sm"
-                  onclick="initUpload(2)"
-                >
+                <button type="button" class="btn btn-primary btn-sm" onclick="initUpload(2)">
                   上传图片
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-info btn-sm"
-                  onclick="showCropper(2)"
-                >
+                <button type="button" class="btn btn-info btn-sm" onclick="showCropper(2)">
                   预览原图
                 </button>
               </div>
@@ -110,12 +84,7 @@
               <div class="card-body p-0">
                 <div
                   class="banner-preview-wrapper"
-                  style="
-                    width: 100%;
-                    height: 225px;
-                    overflow: hidden;
-                    background-color: #f5f5f5;
-                  "
+                  style="width: 100%; height: 225px; overflow: hidden; background-color: #f5f5f5"
                 >
                   <img
                     id="preview3"
@@ -127,18 +96,10 @@
                 </div>
               </div>
               <div class="card-footer">
-                <button
-                  type="button"
-                  class="btn btn-primary btn-sm"
-                  onclick="initUpload(3)"
-                >
+                <button type="button" class="btn btn-primary btn-sm" onclick="initUpload(3)">
                   上传图片
                 </button>
-                <button
-                  type="button"
-                  class="btn btn-info btn-sm"
-                  onclick="showCropper(3)"
-                >
+                <button type="button" class="btn btn-info btn-sm" onclick="showCropper(3)">
                   预览原图
                 </button>
               </div>
@@ -152,99 +113,7 @@
 </div>
 
 <!-- 上传文件的隐藏input -->
-<input
-  id="fileInput"
-  type="file"
-  accept="image/jpeg,image/gif,image/png"
-  style="display: none"
-/>
-
-<!-- 图片裁切Modal -->
-<div
-  class="modal fade"
-  id="cropperModal"
-  tabindex="-1"
-  role="dialog"
-  aria-labelledby="cropperModalLabel"
-  aria-hidden="true"
-  style="padding: 0 !important"
->
-  <div
-    class="modal-dialog"
-    role="document"
-    style="max-width: 100%; width: 100vw; height: 100vh; margin: 0"
-  >
-    <div
-      class="modal-content"
-      style="height: 100vh; display: flex; flex-direction: column"
-    >
-      <div
-        class="modal-header bg-primary text-white"
-        style="padding-top: 5px; padding-bottom: 5px; flex-shrink: 0"
-      >
-        <div>
-          <h6 class="modal-title mb-2" id="cropperModalLabel">
-            图片裁切编辑<small class="text-light"
-              >(推荐尺寸: <strong>1920 x 400</strong> 像素 (16:9 宽屏比例) ·
-              拖动调整 · 滚轮缩放 · 双击重置)</small
-            >
-          </h6>
-        </div>
-        <button
-          type="button"
-          class="close text-white"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div
-        class="modal-body"
-        style="
-          overflow: hidden;
-          flex: 1;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background-color: #f5f5f5;
-          padding: 0;
-        "
-      >
-        <div
-          style="
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-          "
-        >
-          <img
-            id="cropImage"
-            src=""
-            style="
-              max-width: 100%;
-              max-height: 100%;
-              width: auto;
-              height: auto;
-              display: block;
-            "
-            alt="Crop Image"
-          />
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-          取消
-        </button>
-        <button type="button" class="btn btn-primary" onclick="cropImage()">
-          ✓ 确认裁切
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+<input id="fileInput" type="file" accept="image/jpeg,image/gif,image/png" style="display: none" />
 
 <!-- 原图预览Modal -->
 <div
@@ -261,21 +130,13 @@
     role="document"
     style="max-width: 100%; width: 100vw; height: 100vh; margin: 0"
   >
-    <div
-      class="modal-content"
-      style="height: 100vh; display: flex; flex-direction: column"
-    >
+    <div class="modal-content" style="height: 100vh; display: flex; flex-direction: column">
       <div
         class="modal-header bg-info text-white"
         style="padding-top: 5px; padding-bottom: 5px; flex-shrink: 0"
       >
         <h6 class="modal-title">原始图片预览</h6>
-        <button
-          type="button"
-          class="close text-white"
-          data-dismiss="modal"
-          aria-label="Close"
-        >
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -305,207 +166,94 @@
 
 {{define "script"}}
 <script>
-  let currentBannerId = null;
-  let cropper = null;
-  const PREVIEW_WIDTH = 600;
-  const PREVIEW_HEIGHT = 187;
-  // Banner标准尺寸: 1920x400 (16:9 宽屏比例)
-  const BANNER_ASPECT_RATIO = 1920 / 600; // 3.2:1
+  let currentBannerId = null
 
   // 初始化上传
   function initUpload(bannerId) {
-    currentBannerId = bannerId;
+    currentBannerId = bannerId
     // 清空文件输入框，确保每次都能触发change事件
-    $("#fileInput").val("");
-    $("#fileInput").click();
+    $('#fileInput').val('')
+    $('#fileInput').click()
   }
 
   // 文件选择处理
-  $("#fileInput").on("change", function (e) {
-    const file = e.target.files[0];
-    if (!file) return;
+  $('#fileInput').on('change', function (e) {
+    const file = e.target.files[0]
+    if (!file) return
 
     // 验证文件类型
-    if (!file.type.startsWith("image/")) {
-      toastr.error("请选择图片文件");
-      return;
+    if (!file.type.startsWith('image/')) {
+      toastr.error('请选择图片文件')
+      return
     }
 
-    // 读取文件并显示在裁切框中
-    const reader = new FileReader();
-    reader.onload = function (event) {
-      const imageUrl = event.target.result;
-      openCropperModal(imageUrl, file);
-    };
-    reader.readAsDataURL(file);
-  });
-  $("#previewModal, #cropperModal").on("show.bs.modal", function () {
-    $(this).css("padding-right", "0 !important");
-  });
-  // 打开裁切modal
-  function openCropperModal(imageUrl, file) {
-    // 清空之前的图片和cropper实例
-    $("#cropImage").attr("src", "");
-    if (cropper) {
-      cropper.destroy();
-      cropper = null;
-    }
+    uploadOriginalImage(file)
+  })
 
-    // 设置新图片
-    $("#cropImage").attr("src", imageUrl);
+  $('#previewModal').on('show.bs.modal', function () {
+    $(this).css('padding-right', '0 !important')
+  })
 
-    // 显示modal
-    $("#cropperModal").modal({
-      backdrop: "static", // 防止点击背景关闭
-      keyboard: false, // 防止按ESC关闭
-    });
-    $("#cropperModal").modal("show");
-
-    // 等待图片加载完成后初始化cropper
-    $("#cropImage").on("load", function () {
-      // 再次确保cropper被销毁
-      if (cropper) {
-        cropper.destroy();
-      }
-
-      cropper = new Cropper(document.getElementById("cropImage"), {
-        aspectRatio: BANNER_ASPECT_RATIO, // 1920:600 比例 (16:9 宽屏)
-        viewMode: 0,
-        autoCropArea: 0.5,
-        responsive: true,
-        restore: true,
-        guides: true,
-        center: true,
-        highlight: true,
-        cropBoxMovable: true,
-        cropBoxResizable: true,
-        toggleDragModeOnDblclick: true,
-        zoomable: true,
-        zoomOnTouch: true,
-        zoomOnWheel: true,
-        movable: true,
-        minCropBoxWidth: 800, // 最小裁切框宽度
-        minCropBoxHeight: 250, // 最小裁切框高度 (800/250)
-        minContainerWidth: 1280,
-        minContainerHeight: 400,
-        ready: function () {
-          const containerData = cropper.getContainerData();
-          const targetWidth = containerData.width * 0.5;
-          cropper.setCropBoxData({
-            width: targetWidth,
-            height: targetWidth / BANNER_ASPECT_RATIO,
-          });
-        },
-      });
-    });
-  }
-
-  // Modal关闭时的清理
-  $("#cropperModal").on("hidden.bs.modal", function () {
-    // 销毁cropper实例
-    if (cropper) {
-      cropper.destroy();
-      cropper = null;
-    }
-    // 清空图片
-    $("#cropImage").attr("src", "");
-  });
-
-  // 执行裁切
-  function cropImage() {
-    if (!cropper) return;
-
-    // 获取裁切后的Canvas - 强制输出banner标准尺寸
-    const canvas = cropper.getCroppedCanvas({
-      width: 1920, // 强制宽度
-      height: 600, // 强制高度
-      fillColor: "#fff",
-      imageSmoothingEnabled: true,
-      imageSmoothingQuality: "high",
-    });
-
-    // 将Canvas转换为blob并上传
-    canvas.toBlob(
-      function (blob) {
-        uploadCroppedImage(blob);
-      },
-      "image/jpeg",
-      0.9,
-    );
-  }
-
-  // 刷新单个Banner的缩略图
-  function refreshBannerThumb(bannerId) {
-    $.ajax({
-      url: "/pai/banner",
-      type: "GET",
-      dataType: "html",
-      success: function (html) {
-        // 从返回的HTML中提取对应Banner的缩略图URL
-        const tempDiv = $("<div>").html(html);
-        const newThumbUrl = tempDiv.find(`#preview${bannerId}`).attr("src");
-        if (newThumbUrl) {
-          $(`#preview${bannerId}`).attr(
-            "src",
-            newThumbUrl + "?t=" + new Date().getTime(),
-          );
-        }
-      },
-    });
-  }
-
-  // 上传裁切后的图片
-  function uploadCroppedImage(blob) {
-    const formData = new FormData();
-    formData.append("id", currentBannerId);
-    formData.append("file", blob, "cropped.jpg");
+  // 上传原始图片
+  function uploadOriginalImage(file) {
+    const formData = new FormData()
+    formData.append('id', currentBannerId)
+    formData.append('file', file)
 
     $.ajax({
-      url: "/pai/banner/upload",
-      type: "POST",
+      url: '/pai/banner/upload',
+      type: 'POST',
       data: formData,
       processData: false,
       contentType: false,
       success: function (response) {
         if (response.code === 1) {
-          toastr.success("✓ 上传成功！");
-          $("#cropperModal").modal("hide");
-
-          // 销毁cropper并重置
-          if (cropper) {
-            cropper.destroy();
-            cropper = null;
-          }
-
-          // 延迟后刷新缩略图，无需整个页面刷新
+          toastr.success('✓ 上传成功！')
           setTimeout(() => {
-            refreshBannerThumb(currentBannerId);
-          }, 300);
+            refreshBannerThumb(currentBannerId)
+          }, 300)
         } else {
-          toastr.error(response.msg || "上传失败");
+          toastr.error(response.msg || '上传失败')
         }
       },
       error: function () {
-        toastr.error("上传失败，请重试");
-      },
-    });
+        toastr.error('上传失败，请重试')
+      }
+    })
+  }
+
+  // 刷新单个Banner的缩略图
+  function refreshBannerThumb(bannerId) {
+    $.ajax({
+      url: '/pai/banner',
+      type: 'GET',
+      dataType: 'html',
+      success: function (html) {
+        // 从返回的HTML中提取对应Banner的缩略图URL
+        const tempDiv = $('<div>').html(html)
+        const newThumbUrl = tempDiv.find(`#preview${bannerId}`).attr('src')
+        if (newThumbUrl) {
+          $(`#preview${bannerId}`).attr('src', newThumbUrl + '?t=' + new Date().getTime())
+        }
+      }
+    })
   }
 
   // 显示原图预览
   function showCropper(bannerId) {
-    currentBannerId = bannerId;
-    const thumbUrl = $(`#preview${bannerId}`).attr("src");
+    currentBannerId = bannerId
+    const thumbUrl = $(`#preview${bannerId}`).attr('src')
 
     // 从缩略图URL推断原始图片URL
-    const originImageUrl = thumbUrl.replace("_thumb", "");
+    const originImageUrl = thumbUrl.replace('_thumb', '')
 
-    $("#previewImage").attr("src", originImageUrl);
-    $("#previewModal").modal("show");
+    $('#previewImage').attr('src', originImageUrl)
+    $('#previewModal').modal('show')
   }
 
   // 页面加载完成时初始化
   $(function () {
     // 初始化完成
-  });
+  })
 </script>
 {{ end }}

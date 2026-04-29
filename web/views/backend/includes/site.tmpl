@@ -65,9 +65,9 @@
                       </div>
                     </div>
                   </div>
-                  <!-- 第三行：版权信息（占满一行） -->
+                  <!-- 第三行：版权信息,URL -->
                   <div class="form-row mb-3">
-                    <div class="col-md-12">
+                    <div class="col-md-6">
                       <div class="form-group d-flex align-items-center">
                         <label class="mb-0 mr-3" style="min-width: 80px">版权信息：</label>
                         <input
@@ -76,6 +76,18 @@
                           name="Copyright"
                           value="{{.Copyright}}"
                           placeholder="请输入版权信息"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group d-flex align-items-center">
+                        <label class="mb-0 mr-3" style="min-width: 80px">站点URL：</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="Url"
+                          value="{{.Url}}"
+                          placeholder="请输入站点URL"
                         />
                       </div>
                     </div>

@@ -2,6 +2,7 @@ package router
 
 import (
 	"encoding/json"
+	"html/template"
 	"net/http"
 	"strconv"
 
@@ -64,7 +65,8 @@ func home(ctx *gin.Context) {
 	if qiyeeData != nil {
 		var user models.User
 		json.Unmarshal([]byte(qiyeeData.(string)), &user)
-		ctx.HTML(http.StatusOK, "ihome.tmpl", gin.H{"UserName": user.UserName})
+		siteInfo := service.NewSite().GetSite()
+		ctx.HTML(http.StatusOK, "ihome.tmpl", gin.H{"UserName": user.UserName, "SiteUrl": template.URL(siteInfo.Url)})
 	} else {
 		ctx.HTML(http.StatusOK, "ihome.tmpl", nil)
 	}
@@ -116,6 +118,7 @@ func site(ctx *gin.Context) {
 func siteUpdate(ctx *gin.Context) {
 	siteInfo := models.Site{
 		Model:     gorm.Model{ID: 1},
+		Url:       ctx.PostForm("Url"),
 		Title:     ctx.PostForm("Title"),
 		Tel:       ctx.PostForm("Tel"),
 		Email:     ctx.PostForm("Email"),

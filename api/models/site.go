@@ -6,6 +6,7 @@ import (
 
 type Site struct {
 	gorm.Model
+	Url       string
 	Title     string
 	Tel       string
 	Email     string
