@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
-	"time"
 
 	"gerry.wang/qiyee/api/models"
 	"gerry.wang/qiyee/api/service"
@@ -299,19 +298,23 @@ func index(ctx *gin.Context) {
 	var as = service.NewAbout()
 	var ps = service.NewProder()
 	var bs = service.NewBanner()
+	var ss = service.NewSite()
+	var ns = service.NewNews()
 
 	// 获取数据
 	about := as.GetAbout()
 	products := ps.GetProds()
 	banners := bs.GetBanners()
+	site := ss.GetSite()
+	news, _ := ns.GetNewsByPage(1, 5)
 
 	// 准备模板数据
 	data := gin.H{
-		"Title":    "企业门户网站",
 		"About":    *about,
 		"Products": products,
 		"Banners":  banners,
-		"Year":     time.Now().Year(),
+		"News":     news,
+		"Site":     site,
 	}
 
 	ctx.HTML(http.StatusOK, "index.tmpl", data)

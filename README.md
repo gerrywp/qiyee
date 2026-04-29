@@ -18,7 +18,7 @@
 互联网上的开源企业建站都过于复杂了，基本都是使用的Mysql等需要独立安装的数据库。企业门户网站本身就只用做信息展示用，用sqlite完全可以支持。体积最小的企业门户网站，简单；易用；单文件部署。
 
 技术框架：Gin+Gorm+Sqlite  
-页面展示：AdminLTE
+页面展示：AdminLTE（3.2.0）【发现了更干净好用的框架tabler(https://tabler.io/admin-template),考虑后续替换】
 
 ## 前置
 
