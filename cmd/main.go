@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"net/http"
 	"path/filepath"
+	"regexp"
 
 	"gerry.wang/qiyee/api/router"
 	"gerry.wang/qiyee/middleware"
@@ -32,6 +33,7 @@ func main() {
 		"/about",
 		"/products",
 		"/news",
+		"/news/:id",
 		"/contact",
 	}
 	r.Use(middleware.CheckLogin())
@@ -95,10 +97,36 @@ func loadFrontendTemplates(r multitemplate.Renderer, dir string) {
 		panic(err.Error())
 	}
 
-	// 定义安全渲染函数
+	// 定义安全渲染函数和其他自定义函数
 	funcMap := template.FuncMap{
 		"safe": func(s string) template.HTML {
 			return template.HTML(s)
+		},
+		"stripTags": func(s string) string {
+			re := regexp.MustCompile(`(?s)<[^>]*>`)
+			return re.ReplaceAllString(s, "")
+		},
+		"substr": func(s string, start, length int) string {
+			if start < 0 || start >= len(s) {
+				return ""
+			}
+			if start+length > len(s) {
+				length = len(s) - start
+			}
+			return s[start : start+length]
+		},
+		"add": func(a, b int) int {
+			return a + b
+		},
+		"sub": func(a, b int) int {
+			return a - b
+		},
+		"intRange": func(start, end int) []int {
+			var result []int
+			for i := start; i < end; i++ {
+				result = append(result, i)
+			}
+			return result
 		},
 	}
 

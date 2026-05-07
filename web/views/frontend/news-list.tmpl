@@ -1,0 +1,177 @@
+{{define "content"}}
+<div class="container py-5">
+  <!-- 面包屑导航 -->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">首页</a></li>
+      <li class="breadcrumb-item active" aria-current="page">新闻动态</li>
+    </ol>
+  </nav>
+
+  <!-- 页面标题 -->
+  <div class="text-center mb-5">
+    <h1 class="display-4 mb-3">新闻动态</h1>
+    <p class="text-muted">关注我们最新的动态和资讯</p>
+  </div>
+
+  <!-- 新闻列表 -->
+  <div class="news-list-container">
+    {{if .News}}
+    <div class="row">
+      <div class="col-lg-8">
+        <!-- 新闻列表 -->
+        {{ range.News }}
+        <article class="news-item card mb-4 shadow-sm">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <h3 class="card-title mb-0">
+                <a href="/news/{{.ID}}" class="text-dark">{{.Title}}</a>
+              </h3>
+              <small class="text-muted">{{.CreatedAt.Format "2006-01-02"}}</small>
+            </div>
+            <p class="card-text text-secondary mb-3">
+              {{ $plain := stripTags .Content }}
+              {{if gt (len $plain) 150}}
+              {{substr $plain 0 150}}...
+              {{else}}
+              {{$plain}}
+              {{end}}
+            </p>
+            <a href="/news/{{.ID}}" class="btn btn-sm btn-primary">
+              <i class="fas fa-arrow-right"></i> 阅读更多
+            </a>
+          </div>
+        </article>
+        {{ end }}
+
+        <!-- 分页 -->
+        {{if gt .TotalPages 1}}
+        <nav aria-label="Page navigation" class="d-flex justify-content-center mt-5">
+          <ul class="pagination">
+            {{if gt .Page 1}}
+            <li class="page-item">
+              <a class="page-link" href="/news?page=1">首页</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="/news?page={{sub .Page 1}}">上一页</a>
+            </li>
+            {{
+              end
+            }}
+
+            {{range intRange 1 (add .TotalPages 1)}}
+            {{if eq . $.Page}}
+            <li class="page-item active">
+              <span class="page-link">{{.}}</span>
+            </li>
+            {{else}}
+            <li class="page-item">
+              <a class="page-link" href="/news?page={{.}}">{{.}}</a>
+            </li>
+            {{
+              end
+            }}
+            {{
+              end
+            }}
+
+            {{if lt .Page .TotalPages}}
+            <li class="page-item">
+              <a class="page-link" href="/news?page={{add .Page 1}}">下一页</a>
+            </li>
+            <li class="page-item">
+              <a class="page-link" href="/news?page={{.TotalPages}}">末页</a>
+            </li>
+            {{
+              end
+            }}
+          </ul>
+        </nav>
+        {{ end }}
+      </div>
+
+      <!-- 侧边栏 -->
+      <div class="col-lg-4">
+        <!-- 搜索框 -->
+        <div class="card shadow-sm mb-4">
+          <div class="card-body">
+            <h5 class="card-title">搜索新闻</h5>
+            <form action="/news" method="GET">
+              <div class="input-group">
+                <input type="text" class="form-control" placeholder="输入关键词..." name="search" />
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- 统计信息 -->
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">新闻统计</h5>
+            <div class="row text-center">
+              <div class="col-6 border-right">
+                <h4 class="text-primary">{{.Total}}</h4>
+                <p class="text-muted small">总新闻数</p>
+              </div>
+              <div class="col-6">
+                <h4 class="text-info">{{.TotalPages}}</h4>
+                <p class="text-muted small">总页数</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{else}}
+    <div class="text-center py-5">
+      <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+      <h4 class="text-muted">暂无新闻内容</h4>
+      <p class="text-secondary">敬请期待...</p>
+    </div>
+    {{ end }}
+  </div>
+</div>
+
+<style>
+  .news-item {
+    border: none;
+    border-left: 4px solid #007bff;
+    transition: all 0.3s ease;
+  }
+  .news-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  }
+  .news-item .card-title a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .news-item .card-title a:hover {
+    color: #007bff !important;
+  }
+  .pagination {
+    margin-bottom: 0;
+  }
+  .page-link {
+    color: #007bff;
+  }
+  .page-link:hover {
+    background-color: #f8f9fa;
+    color: #0056b3;
+  }
+  .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+  }
+</style>
+
+<!-- 定义自定义模板函数 -->
+<script>
+  // 分页标签条件会在后端使用
+</script>
+{{ end }}

@@ -1,0 +1,214 @@
+{{define "content"}}
+<!-- 联系我们页面内容 -->
+<section class="contact-hero py-5">
+  <div class="container">
+    <h2 class="section-title">联系我们</h2>
+    <p class="text-center text-muted mb-5">
+      如有任何问题或需求，请随时与我们联系，我们将竭诚为您服务
+    </p>
+  </div>
+</section>
+
+<div class="container">
+  <!-- 联系方式卡片 -->
+  <section class="py-4">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <div class="contact-card text-center p-4">
+          <div class="contact-icon mb-3">
+            <i class="fas fa-phone-alt fa-2x"></i>
+          </div>
+          <h5>联系电话</h5>
+          <p class="text-muted mb-0">{{.Site.Tel}}</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="contact-card text-center p-4">
+          <div class="contact-icon mb-3">
+            <i class="fas fa-envelope fa-2x"></i>
+          </div>
+          <h5>电子邮箱</h5>
+          <p class="text-muted mb-0">{{.Site.Email}}</p>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="contact-card text-center p-4">
+          <div class="contact-icon mb-3">
+            <i class="fas fa-globe fa-2x"></i>
+          </div>
+          <h5>公司网站</h5>
+          <p class="text-muted mb-0">{{.Site.Url}}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 留言表单与地图 -->
+  <section class="py-4">
+    <div class="row">
+      <!-- 在线留言 -->
+      <div class="col-md-6 mb-4">
+        <div class="contact-form-wrapper p-4">
+          <h4 class="mb-4"><i class="fas fa-paper-plane mr-2"></i>在线留言</h4>
+          <form id="contactForm">
+            <div class="form-group">
+              <label for="contactName">您的姓名 <span class="text-danger">*</span></label>
+              <input
+                type="text"
+                class="form-control"
+                id="contactName"
+                placeholder="请输入您的姓名"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="contactEmail">电子邮箱 <span class="text-danger">*</span></label>
+              <input
+                type="email"
+                class="form-control"
+                id="contactEmail"
+                placeholder="请输入您的邮箱"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="contactPhone">联系电话</label>
+              <input
+                type="tel"
+                class="form-control"
+                id="contactPhone"
+                placeholder="请输入您的联系电话"
+              />
+            </div>
+            <div class="form-group">
+              <label for="contactSubject">主题 <span class="text-danger">*</span></label>
+              <input
+                type="text"
+                class="form-control"
+                id="contactSubject"
+                placeholder="请输入留言主题"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="contactMessage">留言内容 <span class="text-danger">*</span></label>
+              <textarea
+                class="form-control"
+                id="contactMessage"
+                rows="5"
+                placeholder="请输入您的留言内容"
+                required
+              ></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">
+              <i class="fas fa-paper-plane mr-1"></i> 提交留言
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- 公司信息与地图 -->
+      <div class="col-md-6 mb-4">
+        <div class="contact-info-wrapper p-4">
+          <h4 class="mb-4"><i class="fas fa-info-circle mr-2"></i>联系信息</h4>
+          <ul class="list-unstyled contact-info-list">
+            <li class="mb-3">
+              <i class="fas fa-phone-alt text-primary mr-2"></i>
+              <strong>联系电话：</strong>{{.Site.Tel}}
+            </li>
+            <li class="mb-3">
+              <i class="fas fa-envelope text-primary mr-2"></i>
+              <strong>电子邮箱：</strong>{{.Site.Email}}
+            </li>
+            <li class="mb-3">
+              <i class="fas fa-globe text-primary mr-2"></i>
+              <strong>公司网站：</strong>{{.Site.Url}}
+            </li>
+            <li class="mb-3">
+              <i class="fas fa-certificate text-primary mr-2"></i>
+              <strong>备案号：</strong>{{.Site.ICP}}
+            </li>
+          </ul>
+
+          <!-- 地图占位区域 -->
+          <div class="map-wrapper mt-4">
+            <h5 class="mb-3"><i class="fas fa-map-marker-alt mr-2"></i>公司位置</h5>
+            <div class="map-placeholder">
+              <i class="fas fa-map-marked-alt fa-3x text-muted mb-2"></i>
+              <p class="text-muted mb-0">地图加载区域</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  .contact-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    padding: 60px 0 30px;
+  }
+  .contact-hero .section-title {
+    color: #fff;
+  }
+  .contact-hero p {
+    color: rgba(255, 255, 255, 0.85);
+  }
+  .contact-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+  .contact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  }
+  .contact-icon {
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    margin: 0 auto;
+  }
+  .contact-form-wrapper,
+  .contact-info-wrapper {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    height: 100%;
+  }
+  .contact-info-list li {
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 15px;
+  }
+  .contact-info-list li:last-child {
+    border-bottom: none;
+  }
+  .map-placeholder {
+    background: #f8f9fa;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    text-align: center;
+    padding: 60px 20px;
+  }
+  .form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #5a6fd6 0%, #6a4292 100%);
+  }
+</style>
+{{ end }}

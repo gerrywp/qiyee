@@ -1,0 +1,91 @@
+{{define "content"}}
+<div class="container py-5">
+  <!-- 面包屑导航 -->
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">首页</a></li>
+      <li class="breadcrumb-item"><a href="/news">新闻动态</a></li>
+      <li class="breadcrumb-item active" aria-current="page">详情</li>
+    </ol>
+  </nav>
+
+  <!-- 新闻详情内容 -->
+  <article class="news-detail">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <!-- 新闻标题 -->
+        <div class="news-header mb-4">
+          <h1 class="news-title mb-3">{{.News.Title}}</h1>
+          <div class="news-meta text-muted border-bottom pb-3">
+            <span
+              ><i class="fas fa-calendar-alt"></i>
+              发布时间：{{.News.CreatedAt.Format "2006-01-02 15:04"}}</span
+            >
+            <span class="ml-4"><i class="fas fa-user"></i> 发布者：管理员</span>
+          </div>
+        </div>
+
+        <!-- 新闻内容 -->
+        <div class="news-content my-4">
+          {{.News.Content | safe}}
+        </div>
+
+        <!-- 操作按钮 -->
+        <div class="news-actions mb-4 pb-4 border-bottom">
+          <a href="/news" class="btn btn-outline-primary">
+            <i class="fas fa-arrow-left"></i> 返回新闻列表
+          </a>
+        </div>
+
+        <!-- 相关新闻 -->
+        <div class="related-news mt-5">
+          <h3 class="mb-4">相关新闻</h3>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="alert alert-info" role="alert">
+                <i class="fas fa-info-circle"></i> 相关新闻内容将在后续版本中完善
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</div>
+
+<style>
+  .news-detail {
+    background: #fff;
+  }
+  .news-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    line-height: 1.3;
+  }
+  .news-meta {
+    font-size: 0.95rem;
+  }
+  .news-meta span {
+    display: inline-block;
+  }
+  .news-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    text-align: justify;
+  }
+  .news-content p {
+    margin-bottom: 1.5rem;
+  }
+  .news-content img {
+    max-width: 100%;
+    height: auto;
+    margin: 1.5rem 0;
+    border-radius: 6px;
+  }
+  .news-actions {
+    text-align: center;
+  }
+</style>
+{{ end }}
