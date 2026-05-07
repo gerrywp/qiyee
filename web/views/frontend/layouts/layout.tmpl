@@ -26,6 +26,14 @@
         overflow: hidden;
         color: #ffffff;
       }
+      .hero-slider {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
       .hero-bg {
         position: absolute;
         inset: 0;
@@ -34,6 +42,11 @@
         background-repeat: no-repeat;
         filter: brightness(0.6);
         z-index: 1;
+        opacity: 0;
+        transition: opacity 1s ease-in-out;
+      }
+      .hero-bg.active {
+        opacity: 1;
       }
       .hero-overlay {
         position: absolute;
@@ -169,5 +182,25 @@
     <script src="/static/plugins/jquery/jquery.min.js"></script>
     <script src="/static/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/static/dist/js/adminlte.min.js"></script>
+    <!-- 轮播脚本 -->
+    <script>
+      $(document).ready(function () {
+        var currentIndex = 0
+        var backgrounds = $('.hero-bg')
+        var totalBackgrounds = backgrounds.length
+
+        // 显示第一张背景
+        backgrounds.eq(currentIndex).addClass('active')
+
+        // 每30秒切换一次
+        setInterval(function () {
+          backgrounds.eq(currentIndex).removeClass('active')
+
+          currentIndex = (currentIndex + 1) % totalBackgrounds
+
+          backgrounds.eq(currentIndex).addClass('active')
+        }, 30000)
+      })
+    </script>
   </body>
 </html>

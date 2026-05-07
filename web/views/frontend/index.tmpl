@@ -1,8 +1,10 @@
 {{define "content"}}
 <section class="hero-section">
-  {{with index .Banners 0}}
-  <div class="hero-bg" style="background-image:url('{{.Url}}');"></div>
-  {{ end }}
+  <div class="hero-slider">
+    {{ range.Banners }}
+    <div class="hero-bg" style="background-image:url('{{.Url}}');"></div>
+    {{ end }}
+  </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="container h-100">

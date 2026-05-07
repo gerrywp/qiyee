@@ -1,0 +1,93 @@
+{{define "content"}}
+<div class="container">
+  <!-- 产品列表标题 -->
+  <div class="py-5">
+    <h2 class="section-title">产品中心</h2>
+
+    <!-- 产品列表 -->
+    <div class="row">
+      {{ range.Products }}
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100">
+          <img
+            src="{{.ImgUrl}}"
+            class="card-img-top"
+            alt="{{.Name}}"
+            style="height: 200px; object-fit: cover"
+          />
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">{{.Name}}</h5>
+            <p class="card-text flex-grow-1">{{.Desc}}</p>
+            <div class="mt-auto">
+              <a href="/products/{{.ID}}" class="btn btn-primary">查看详情</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {{else}}
+      <div class="col-12">
+        <div class="text-center py-5">
+          <p class="text-muted">暂无产品信息。</p>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+
+    <!-- 分页 -->
+    {{if gt .TotalPages 1}}
+    <nav aria-label="产品列表分页" class="mt-5">
+      <ul class="pagination justify-content-center">
+        <!-- 上一页 -->
+        {{if gt .Page 1}}
+        <li class="page-item">
+          <a class="page-link" href="/products?page={{.PrevPage}}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {{else}}
+        <li class="page-item disabled">
+          <span class="page-link" aria-hidden="true">&laquo;</span>
+        </li>
+        {{
+          end
+        }}
+
+        <!-- 页码 -->
+        {{
+          range.PageNumbers
+        }}
+        {{if eq . .Page}}
+        <li class="page-item active">
+          <span class="page-link">{{.}}</span>
+        </li>
+        {{else}}
+        <li class="page-item">
+          <a class="page-link" href="/products?page={{.}}">{{.}}</a>
+        </li>
+        {{
+          end
+        }}
+        {{
+          end
+        }}
+
+        <!-- 下一页 -->
+        {{if lt .Page .TotalPages}}
+        <li class="page-item">
+          <a class="page-link" href="/products?page={{.NextPage}}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        {{else}}
+        <li class="page-item disabled">
+          <span class="page-link" aria-hidden="true">&raquo;</span>
+        </li>
+        {{
+          end
+        }}
+      </ul>
+    </nav>
+    {{ end }}
+  </div>
+</div>
+{{ end }}
