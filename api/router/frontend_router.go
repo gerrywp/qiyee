@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"gerry.wang/qiyee/api/models"
 	"gerry.wang/qiyee/api/service"
 	"github.com/gin-gonic/gin"
 )
@@ -18,7 +17,6 @@ func SetupFrontendRouter(r *gin.Engine) *gin.Engine {
 	r.GET("/news/:id", newsDetail)
 	r.GET("/contact", contact)
 	r.GET("/products", productsList)
-	r.GET("/products/:id", productDetail)
 	return r
 }
 
@@ -207,45 +205,4 @@ func productsList(ctx *gin.Context) {
 	}
 
 	ctx.HTML(http.StatusOK, "products.tmpl", data)
-}
-
-// 产品详情页面处理函数
-func productDetail(ctx *gin.Context) {
-	var ps = service.NewProder()
-	var ss = service.NewSite()
-
-	// 获取产品ID
-	id := ctx.Param("id")
-	productID, err := strconv.ParseUint(id, 10, 32)
-	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"error": "Invalid product ID"})
-		return
-	}
-
-	// 获取产品详情
-	product, err := ps.FindByID(uint(productID))
-	if err != nil {
-		ctx.AbortWithStatusJSON(http.StatusNotFound, gin.H{"error": "Product not found"})
-		return
-	}
-
-	// 获取相关产品（排除当前产品）
-	allProducts := ps.GetProds()
-	var relatedProducts []models.Prod
-	for _, p := range allProducts {
-		if p.ID != product.ID && len(relatedProducts) < 3 {
-			relatedProducts = append(relatedProducts, p)
-		}
-	}
-
-	site := ss.GetSite()
-
-	// 准备模板数据
-	data := gin.H{
-		"Product":         product,
-		"RelatedProducts": relatedProducts,
-		"Site":            site,
-	}
-
-	ctx.HTML(http.StatusOK, "products-detail.tmpl", data)
 }

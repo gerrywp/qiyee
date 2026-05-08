@@ -1,0 +1,32 @@
+# Dependencies
+
+node_modules/
+\*\*/node_modules/
+
+# Build outputs
+
+/build/
+/dist/
+/.next/
+/out/
+
+# Testing artifacts
+
+/coverage/
+
+# Environment variables
+
+.env
+.env.\*
+
+# Large data files
+
+_.csv
+_.xlsx
+\*.sqlite
+\*.db3
+
+# Generated/minified code
+
+_.min.js
+_.map

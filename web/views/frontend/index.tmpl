@@ -25,14 +25,13 @@
   <section class="py-5">
     <h2 class="section-title">产品中心</h2>
     <div class="row">
-      {{ range.Products }}
+      {{ range (slice .Products 0 3) }}
       <div class="col-md-4 mb-4">
         <div class="card h-100">
           <img src="{{.ImgUrl}}" class="card-img-top" alt="{{.Name}}" />
           <div class="card-body">
             <h5 class="card-title">{{.Name}}</h5>
             <p class="card-text">{{.Desc}}</p>
-            <a href="/products/{{.ID}}" class="btn btn-primary">查看详情</a>
           </div>
         </div>
       </div>

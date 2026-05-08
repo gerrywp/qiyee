@@ -50,7 +50,15 @@ go run cmd\main.go
    默认用户名密码为：pai/7654321
 5. 企业主页：<http://localhost:8080>
 
-## 打赏
+## 截图
+
+![主页](./docs/images/Snipaste_2026-05-08_20-29-18.png '主页')
+![关于](./docs/images/Snipaste_2026-05-08_20-29-53.png '关于')
+![产品](./docs/images/Snipaste_2026-05-08_20-30-08.png '产品')
+![后端](./docs/images/Snipaste_2026-05-08_20-30-19.png '后端')
+![站点信息](./docs/images/Snipaste_2026-05-08_20-30-42.png '站点信息')
+
+## 谢谢
 
 <a target="_blank" rel="noopener noreferrer" href="https://github.com/gerrywp/qiyee/blob/main/wx_20240314175148.jpg">
 <img src="./wx_20240314175148.jpg" alt="微信收款码" title="微信支付" height="160" width="160"/>
@@ -59,4 +67,4 @@ go run cmd\main.go
 <img src="./zfb_20240314175158.jpg" alt="支付宝收款码" title="支付宝支付" height="160" width="160"/>
 </a>
 
-您的支持是我前进的动力
+东风吹尽西风起
