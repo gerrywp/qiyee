@@ -34,6 +34,9 @@ func SetupAdminRouter(r *gin.Engine) *gin.Engine {
 		pai.POST("/news/update", newsUpdate)
 		pai.POST("/news/delete", newsDelete)
 		pai.POST("/logout", logout)
+		pai.GET("/users", usersList)
+		pai.POST("/users/create", usersCreate)
+		pai.POST("/users/delete", usersDelete)
 	}
 	return r
 }
@@ -279,4 +282,47 @@ func newsDelete(ctx *gin.Context) {
 		_ = service.NewNews().DeleteByID(uint(id))
 	}
 	ctx.JSON(http.StatusOK, gin.H{"code": true, "msg": "删除成功"})
+}
+
+// usersList 显示用户列表与添加表单
+func usersList(ctx *gin.Context) {
+	users, err := models.GetAllUsers()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"code": 0, "msg": "无法获取用户列表"})
+		return
+	}
+	ctx.HTML(http.StatusOK, "users.tmpl", gin.H{"Users": users})
+}
+
+// usersCreate 创建新用户（username + password）
+func usersCreate(ctx *gin.Context) {
+	userName := ctx.PostForm("UserName")
+	password := ctx.PostForm("Password")
+	if userName == "" || password == "" {
+		ctx.JSON(http.StatusOK, gin.H{"code": 0, "msg": "用户名或密码不能为空"})
+		return
+	}
+	if _, err := models.CreateUser(userName, password); err != nil {
+		if err == models.ErrUserExists {
+			ctx.JSON(http.StatusOK, gin.H{"code": 0, "msg": "用户名已存在"})
+			return
+		}
+		ctx.JSON(http.StatusOK, gin.H{"code": 0, "msg": "创建用户失败"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"code": 1, "msg": "创建成功"})
+}
+
+// usersDelete 删除用户
+func usersDelete(ctx *gin.Context) {
+	id, _ := strconv.Atoi(ctx.PostForm("ID"))
+	if id <= 0 {
+		ctx.JSON(http.StatusOK, gin.H{"code": 0, "msg": "参数错误"})
+		return
+	}
+	if err := models.DeleteUserByID(uint(id)); err != nil {
+		ctx.JSON(http.StatusOK, gin.H{"code": 0, "msg": "删除失败"})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{"code": 1, "msg": "删除成功"})
 }

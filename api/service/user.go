@@ -22,7 +22,7 @@ func (us *UserService) Login(ctx *gin.Context, userName, password string, rememb
 	if entity.ID == 0 {
 		return false
 	} else {
-		if entity.Password != password {
+		if !entity.CheckPassword(password) {
 			return false
 		}
 		common.SetCurrent(&entity)

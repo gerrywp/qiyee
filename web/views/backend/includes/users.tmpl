@@ -1,0 +1,130 @@
+﻿{{ define "content" }}
+<div class="wrapper">
+  <div class="content-wrapper">
+    <section class="content">
+      <div class="container-fluid mt-3">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">用户管理</h3>
+          </div>
+          <div class="card-body">
+            <form id="createForm" class="form-inline mb-3" method="POST" action="/pai/users/create">
+              <div class="form-group mr-2">
+                <input class="form-control" name="UserName" placeholder="用户名" required />
+              </div>
+              <div class="form-group mr-2">
+                <input
+                  class="form-control"
+                  name="Password"
+                  placeholder="密码"
+                  type="password"
+                  required
+                />
+              </div>
+              <button class="btn btn-primary" type="submit">添加用户</button>
+            </form>
+
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>用户名</th>
+                  <th>创建时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{
+                  range.Users
+                }}
+                <tr>
+                  <td>{{ .ID }}</td>
+                  <td>{{ .UserName }}</td>
+                  <td>{{ .CreatedAt.Format "2006年01月02日 15:04:05" }}</td>
+                  <td>
+                    <form
+                      style="display: inline"
+                      class="deleteForm"
+                      method="POST"
+                      action="/pai/users/delete"
+                    >
+                      <input type="hidden" name="ID" value="{{ .ID }}" />
+                      <button class="btn btn-danger btn-sm" type="submit">删除</button>
+                    </form>
+                  </td>
+                </tr>
+                {{
+                  end
+                }}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+{{ end }}
+{{ define "script" }}
+<script>
+  $(function () {
+    function refreshUserList() {
+      $.get('/pai/users', function (html) {
+        try {
+          var newTbody = $(html).find('table.table tbody').html()
+          if (newTbody) {
+            $('table.table tbody').html(newTbody)
+          }
+        } catch (e) {
+          console.error(e)
+        }
+      })
+    }
+
+    $('#createForm').submit(function (e) {
+      e.preventDefault()
+      var $btn = $(this).find('button[type=submit]')
+      $btn.prop('disabled', true)
+      $.post(
+        $(this).attr('action'),
+        $(this).serialize(),
+        function (data) {
+          if (data && data.code) {
+            toastr.success(data.msg || '创建成功')
+            $('#createForm')[0].reset()
+            refreshUserList()
+          } else {
+            toastr.error(data.msg || '创建失败')
+          }
+        },
+        'json'
+      ).always(function () {
+        $btn.prop('disabled', false)
+      })
+    })
+
+    $(document).on('submit', '.deleteForm', function (e) {
+      e.preventDefault()
+      if (!confirm('确认删除吗?')) return
+      var $form = $(this)
+      var $btn = $form.find('button[type=submit]')
+      $btn.prop('disabled', true)
+      $.post(
+        $form.attr('action'),
+        $form.serialize(),
+        function (data) {
+          if (data && data.code) {
+            toastr.success(data.msg || '删除成功')
+            refreshUserList()
+          } else {
+            toastr.error(data.msg || '删除失败')
+          }
+        },
+        'json'
+      ).always(function () {
+        $btn.prop('disabled', false)
+      })
+    })
+  })
+</script>
+{{ end }}
