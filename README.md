@@ -1,17 +1,6 @@
 # qiyee
 
-<a href="https://github.com/gin-gonic/gin" target="_blank">
-    <img src="https://img.shields.io/badge/Gin-v1.9.1-blue" alt="Gin">
-</a>
-<a href="https://gorm.io/zh_CN/docs/" target="_blank">
-    <img src="https://img.shields.io/badge/Gorm-v1.25.2-blue" alt="Gorm">
-</a>
-<a href="https://3vshej.cn/AdminLTE/" target="_blank">
-    <img src="https://img.shields.io/badge/AdminLTE-3.2.0-blue" alt="AdminLTE">
-</a>
-<a href="https://www.sqlite.org/index.html" target="_blank">
-    <img src="https://img.shields.io/badge/Sqlite-v1.5.2-blue" alt="Sqlite">
-</a>
+# [![gin](https://img.shields.io/badge/Gin-v1.9.1-blue)](https://github.com/gin-gonic/gin) [![gorm](https://img.shields.io/badge/Gorm-v1.25.2-blue)](https://gorm.io/zh_CN/docs/) [![sqlite](https://img.shields.io/badge/Sqlite-v1.5.2-blue)](https://www.sqlite.org/index.html)
 
 ## 介绍
 
