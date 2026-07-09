@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QiYee | 登录</title>
+  <!-- Tabler Core -->
+  <link rel="stylesheet" href="/static/dist/tabler/1.4.0/css/tabler.min.css" />
+</head>
+
+<body class="d-flex flex-column min-h-screen">
+  <div class="page page-center">
+    <div class="container-tight py-4">
+      <div class="text-center mb-4">
+        <h1><b>Qi</b>Yee</h1>
+      </div>
+      <div class="card card-md">
+        <div class="card-body">
+          <h2 class="card-title text-center mb-4">登录开启旅行</h2>
+          <form x-data="dosubmit" x-on:submit.prevent="login()" method="post" autocomplete="off"
+            class="needs-validation" novalidate>
+            <div class="mb-3">
+              <label class="form-label">用户名</label>
+              <div class="input-icon mb-3">
+                <span class="input-icon-addon">
+                  <i class="fas fa-user"></i>
+                </span>
+                <input type="text" name="UserName" class="form-control" placeholder="请输入用户名" autocomplete="username"
+                  required />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">密码</label>
+              <div class="input-icon mb-3">
+                <span class="input-icon-addon">
+                  <i class="fas fa-lock"></i>
+                </span>
+                <input type="password" name="Password" class="form-control" placeholder="请输入密码"
+                  autocomplete="current-password" required />
+              </div>
+            </div>
+            <div class="mb-3">
+              <div class="form-check">
+                <input type="checkbox" id="remember" name="IsRemember" value="true" class="form-check-input" />
+                <label class="form-check-label" for="remember">记住我</label>
+              </div>
+            </div>
+            <div x-show="errorMessage" x-transition class="alert alert-danger mb-3" x-text="errorMessage"></div>
+            <div class="mb-3">
+              <button type="submit" class="btn btn-primary w-100" :disabled="isLoading" x-html="buttonText"></button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="text-center text-muted mt-3">&copy; 2024 QiYee. All rights reserved.</div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('dosubmit', () => ({
+        isLoading: false,
+        errorMessage: '',
+        buttonText: '登录',
+        login: async function () {
+          this.isLoading = true
+          this.errorMessage = ''
+          this.buttonText =
+            '<span class=\"spinner-border spinner-border-sm me-2\"></span>登录中...'
+          const formData = new FormData(this.$el)
+
+          try {
+            const response = await fetch('/pai/login', {
+              method: 'POST',
+              body: formData,
+              headers: {
+                Accept: 'application/json'
+              }
+            })
+
+            const result = await response.json()
+
+            if (result.code === 1) {
+              // 登录成功，跳转到首页
+              window.location.href = '/pai/home'
+            } else {
+              // 登录失败，显示错误信息
+              this.errorMessage = result.msg || '登录失败，请检查用户名和密码'
+            }
+          } catch (error) {
+            console.error('Login error:', error)
+            this.errorMessage = '登录请求处理失败，请稍后再试。'
+          } finally {
+            this.isLoading = false
+            this.buttonText = '登录'
+          }
+        }
+      }))
+    })
+  </script>
+  <!-- Tabler Core -->
+  <script src="/static/dist/tabler/1.4.0/js/tabler.min.js"></script>
+  <script defer src="/static/dist/aplinejs/3.15.12/apline.min.js"></script>
+</body>
+
+</html>

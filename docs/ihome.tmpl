@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>QiYee | Home</title>
+  <!-- Tabler Core -->
+  <link rel="stylesheet" href="/static/dist/tabler/1.4.0/css/tabler.min.css" />
+</head>
+
+<body class="layout-fluid">
+  <div class="page" x-data="tabsManager">
+    <!-- 侧边栏 -->
+    <aside class="navbar navbar-vertical navbar-expand-lg" data-bs-theme="dark" id="sidebar">
+      <div class="container-fluid">
+        <!-- 侧边栏切换按钮 -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar-menu"
+          aria-controls="sidebar-menu" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- 侧边栏品牌 -->
+        <div class="navbar-brand navbar-brand-autodark">
+          <a href="{{ with.SiteUrl }}{{ . }}{{ else }}#{{ end }}" aria-label="Qiyee">
+            <span class="navbar-brand-text">Qiyee</span>
+          </a>
+        </div>
+        <!-- 侧边栏菜单 -->
+        <div class="collapse navbar-collapse" id="sidebar-menu">
+          <ul class="navbar-nav pt-lg-3">
+            <li class="nav-item">
+              <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#nav-home">
+                <span class="nav-link-icon">
+                  <i class="fas fa-home"></i>
+                </span>
+                <span class="nav-link-title">首页</span>
+                <span class="nav-link-arrow">
+                  <i class="fas fa-angle-left"></i>
+                </span>
+              </a>
+              <div class="collapse" id="nav-home">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link" @click="openTab('横幅', '/pai/banner')">
+                      <span class="nav-link-icon">
+                        <i class="far fa-circle"></i>
+                      </span>
+                      <span class="nav-link-title">横幅</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link" @click="openTab('站点信息', '/pai/site')">
+                      <span class="nav-link-icon">
+                        <i class="far fa-circle"></i>
+                      </span>
+                      <span class="nav-link-title">站点信息</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link" @click="openTab('用户管理', '/pai/users')">
+                      <span class="nav-link-icon">
+                        <i class="far fa-circle"></i>
+                      </span>
+                      <span class="nav-link-title">用户管理</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#nav-prod">
+                <span class="nav-link-icon">
+                  <i class="fas fa-vector-square"></i>
+                </span>
+                <span class="nav-link-title">产品中心</span>
+                <span class="nav-link-arrow">
+                  <i class="fas fa-angle-left"></i>
+                </span>
+              </a>
+              <div class="collapse" id="nav-prod">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link" @click="openTab('列表', '/pai/prod')">
+                      <span class="nav-link-icon">
+                        <i class="far fa-circle"></i>
+                      </span>
+                      <span class="nav-link-title">列表</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#nav-about">
+                <span class="nav-link-icon">
+                  <i class="fas fa-tree"></i>
+                </span>
+                <span class="nav-link-title">关于我们</span>
+                <span class="nav-link-arrow">
+                  <i class="fas fa-angle-left"></i>
+                </span>
+              </a>
+              <div class="collapse" id="nav-about">
+                <ul class="nav nav-sm flex-column">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link" @click="openTab('品牌介绍', '/pai/brand')">
+                      <span class="nav-link-icon">
+                        <i class="far fa-circle"></i>
+                      </span>
+                      <span class="nav-link-title">品牌介绍</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link" @click="openTab('新闻资讯', '/pai/news')">
+                      <span class="nav-link-icon">
+                        <i class="far fa-circle"></i>
+                      </span>
+                      <span class="nav-link-title">新闻资讯</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 内容区域 -->
+    <div class="page-wrapper">
+      <!-- 页面头部 -->
+      <div class="page-header d-print-none">
+        <!-- 顶部导航栏 -->
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <div class="container-fluid">
+            <div class="navbar-nav ms-auto">
+              <div class="nav-item">
+                <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                  <i class="fas fa-expand-arrows-alt"></i>
+                </a>
+              </div>
+              <div class="nav-item dropdown">
+                <a href="#" class="nav-link d-flex lh-1 p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                  <div class="d-none d-xl-block ps-2">
+                    <div>{{.UserName}}</div>
+                  </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                  <a href="#" class="dropdown-item">设置</a>
+                  <a href="#" class="dropdown-item">个人资料</a>
+                  <div class="dropdown-divider"></div>
+                  <a href="#" class="dropdown-item"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    退出登录
+                  </a>
+                  <form id="logout-form" action="/pai/logout" method="POST" style="display: none"></form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </nav>
+
+        <!-- Tab 内容区域 -->
+        <div class="page-body">
+          <div class="container-xl">
+            <div class="card">
+              <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                  <template x-for="tab in tabs" :key="tab.id">
+                    <li class="nav-item">
+                      <!-- 动态绑定 id 和 class (如果是当前激活的加上 active) -->
+                      <button class="nav-link" :class="{ 'active': activeTab === tab.title }" :id="'tab-' + tab.id"
+                        @click="switchTab(tab.id)">
+
+                        <span x-text="tab.title"></span>
+
+                        <!-- 关闭按钮 - 首页不显示关闭按钮 -->
+                        <span class="nav-link-close ms-2" x-show="tab.title !== '首页'" @click.stop="closeTab(tab.title)"
+                          style="cursor:pointer;">&times;</span>
+                      </button>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content" id="myTabContent">
+                  <template x-for="tab in tabs" :key="tab.id">
+                    <div class="tab-pane" :class="{ 'active': activeTab === tab.title }" :id="tab.id" role="tabpanel"
+                      x-html="tab.content">
+                    </div>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('tabsManager', () => ({
+        tabs: [
+          {
+            id: 'tab-home',
+            title: '首页',
+            url: '',
+            content: '欢迎您'
+          }
+        ],
+        activeTab: '首页',
+
+        openTab(title, url) {
+          // 检查是否已存在相同标题的tab
+          const existingTab = this.tabs.find(tab => tab.title === title);
+
+          if (existingTab) {
+            // 如果已存在，激活该tab
+            this.activeTab = title;
+            return;
+          }
+
+          // 创建新的tab
+          const tabId = 'tab-' + Date.now();
+          this.tabs.push({
+            id: tabId,
+            title: title,
+            url: url,
+            content: '<div class="d-flex h-100 align-items-center justify-content-center"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+          });
+
+          // 激活新创建的tab
+          this.activeTab = title;
+
+          // 加载内容
+          this.loadTabContent(tabId, url);
+        },
+
+        loadTabContent(tabId, url) {
+          fetch(url)
+            .then(response => response.text())
+            .then(html => {
+              // 更新tab内容
+              const tab = this.tabs.find(t => t.id === tabId);
+              if (tab) {
+                tab.content = html;
+              }
+            })
+            .catch(error => {
+              console.error('Error loading tab content:', error);
+              const tab = this.tabs.find(t => t.id === tabId);
+              if (tab) {
+                tab.content = '<div class="alert alert-danger">加载失败，请稍后重试</div>';
+              }
+            });
+        },
+
+        closeTab(title) {
+          // 首页不允许关闭
+          if (title === '首页') {
+            return;
+          }
+
+          // 查要关闭的tab
+          const tabIndex = this.tabs.findIndex(tab => tab.title === title);
+          if (tabIndex === -1) return;
+
+          // 如果关闭的是当前激活的tab，激活前一个tab
+          if (this.activeTab === title) {
+            if (tabIndex > 0) {
+              this.activeTab = this.tabs[tabIndex - 1].title;
+            } else if (this.tabs.length > 1) {
+              this.activeTab = this.tabs[1].title;
+            } else {
+              this.activeTab = '首页';
+            }
+          }
+
+          // 移除tab
+          this.tabs.splice(tabIndex, 1);
+        },
+
+        switchTab(tabId) {
+          // 根据tabId找到对应的tab标题
+          const tab = this.tabs.find(t => t.id === tabId);
+          if (tab) {
+            this.activeTab = tab.title;
+          }
+        }
+      }))
+    })
+  </script>
+  <!-- Tabler Core -->
+  <script src="/static/dist/tabler/1.4.0/js/tabler.min.js"></script>
+  <!-- Alpine.js -->
+  <script defer src="/static/dist/aplinejs/3.15.12/apline.min.js"></script>
+</body>
+
+</html>

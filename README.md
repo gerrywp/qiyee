@@ -7,7 +7,16 @@
 互联网上的开源企业建站都过于复杂了，基本都是使用的Mysql等需要独立安装的数据库。企业门户网站本身就只用做信息展示用，用sqlite完全可以支持。体积最小的企业门户网站，简单；易用；单文件部署。
 
 技术框架：Gin+Gorm+Sqlite  
-页面展示：AdminLTE（3.2.0）【发现了更干净好用的框架tabler(https://tabler.io/admin-template),考虑后续替换。同时摒弃掉iframe,采用HTMX做tab页展示】
+页面展示：AdminLTE（3.2.0）【发现了更干净好用的框架tabler(https://tabler.io/admin-template),考虑后续替换。同时摒弃掉iframe,采用alpinejs做tab页展示】
+
+## GHAT(gin+htmx+alpinejs+tabler)
+
+1. Gin：Go语言的Web框架，性能高，易用性强。
+2. HTMX：一个前端库，允许你在HTML中使用属性来发起HTTP请求并更新页面内容，而无需编写大量的JavaScript代码。
+3. Alpine.js：一个轻量级的JavaScript框架，提供了类似于Vue.js的响应式数据绑定和组件化开发，但体积更小，适合用于简单的交互。
+4. Tabler：一个现代化的开源管理面板模板，提供了丰富的UI组件和布局，适合用于构建管理后台和仪表盘。
+
+登录页面和管理后台使用Alpine.js+Tabler实现，参考docs下的模板文件，HTMX只用在主页面加载一次即可，tab子页面可以直接使用。
 
 ## 前置
 
